@@ -64,19 +64,29 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
           </div>
 
           {/* Majestic Hero Header */}
-          <h1 className="flex flex-col gap-1 sm:gap-2">
-            <span className="text-3xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white tracking-tight leading-tight drop-shadow-sm">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="flex flex-col gap-1 sm:gap-4"
+          >
+            <span className="text-4xl sm:text-5xl md:text-6xl font-serif font-black text-white tracking-tight leading-tight drop-shadow-lg">
               Highest Quality
             </span>
             <span className="text-5xl sm:text-6xl md:text-7xl font-sans font-black text-[#f29a1b] tracking-tight leading-[1] drop-shadow-sm">
               Custom Printing
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Description Paragraph */}
-          <p className="text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed font-sans max-w-xl">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="text-slate-300 text-base sm:text-lg md:text-xl leading-relaxed font-sans max-w-xl font-light"
+          >
             We deliver unparalleled volume commercial offset printing. From academic textbooks to premium corporate stationery, we bring your most demanding visions to life with absolute precision.
-          </p>
+          </motion.p>
 
           {/* Action CTAs */}
           <div className="w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">

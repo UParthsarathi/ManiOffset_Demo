@@ -31,7 +31,7 @@ export function Footer() {
               {/* Place your logo in the public folder and update the src below */}
               <div className="relative h-12 w-48 mb-2">
                 <Image 
-                  src="/logo-placeholder.svg" 
+                  src="/logo.png" 
                   alt="FeelThe Print Logo" 
                   fill
                   className="object-contain object-left" 

@@ -9,8 +9,8 @@ export function Clients() {
 
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         {/* Stark Center Title above the card */}
-        <h2 className="text-white text-base sm:text-xl lg:text-2xl font-sans font-black tracking-[0.25em] text-center uppercase mb-8">
-          A FEW OF OUR PRESTIGIOUS CLIENTS
+        <h2 className="text-white text-base sm:text-xl lg:text-3xl font-serif tracking-[0.1em] text-center mb-10 opacity-90 font-light">
+          A few of our <strong className="font-bold">prestigious clients</strong>
         </h2>
 
         {/* Clean, Majestic stark-white card container */}

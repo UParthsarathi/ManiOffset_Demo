@@ -125,7 +125,7 @@ export function Navbar() {
             {/* Place your logo in the public folder and update the src below */}
             <div className="relative h-10 w-40 sm:h-12 sm:w-48 my-1">
               <Image 
-                src="/logo-placeholder.svg" 
+                src="/logo.png" 
                 alt="FeelThe Print Logo" 
                 fill
                 className="object-contain object-left" 

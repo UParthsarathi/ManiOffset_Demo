@@ -5,6 +5,7 @@ import { Hero } from "../components/Hero";
 import { ProductsSection } from "../components/ProductsSection";
 import { Clients } from "../components/Clients";
 import { PromoCallouts } from "../components/PromoCallouts";
+import { Reviews } from "../components/Reviews";
 import { Footer } from "../components/Footer";
 import { BookExperience } from "../components/BookExperience";
 
@@ -12,7 +13,7 @@ export default function Home() {
   const [isBookletActive, setIsBookletActive] = useState(false);
 
   return (
-    <main className="w-full flex flex-col min-h-screen bg-[#04081e] relative">
+    <main className="w-full flex flex-col min-h-screen bg-slate-50 relative">
       {/* 3D Interactive Booklet Standalone Showroom (Bypasses regular page flow when launched) */}
       {isBookletActive && (
         <BookExperience 
@@ -33,6 +34,9 @@ export default function Home() {
 
       {/* 5. Double Promo Callous Row - High-volume and Fast deadlines boxes (Mimicking Screenshot 3) */}
       <PromoCallouts />
+
+      {/* Reviews Section */}
+      <Reviews />
 
       {/* 4. Prestigious Clients Section - Grid of genuine corporate client logos (Mimicking Screenshot 2) */}
       <Clients />
