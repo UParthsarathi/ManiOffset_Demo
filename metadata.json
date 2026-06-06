@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Remix: Feel The Print",
+  "description": "Landing page for an offset book printing company featuring a 3D interactive scroll and modern UI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
