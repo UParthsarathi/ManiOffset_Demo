@@ -72,7 +72,7 @@ export function ProductsSection() {
   }, [activeCategory, searchQuery]);
 
   return (
-    <section className="w-full bg-slate-50 py-12 px-2 sm:px-6 md:px-8 xl:px-12" id="home-products">
+    <section className="w-full bg-transparent py-12 px-2 sm:px-6 md:px-8 xl:px-12 relative z-10" id="home-products">
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         
         {/* Header Header */}

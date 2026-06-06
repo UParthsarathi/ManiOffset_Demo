@@ -14,6 +14,9 @@ export default function Home() {
 
   return (
     <main className="w-full flex flex-col min-h-screen bg-slate-50 relative">
+      {/* Background Texture Overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.4] bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px]"></div>
+      
       {/* 3D Interactive Booklet Standalone Showroom (Bypasses regular page flow when launched) */}
       {isBookletActive && (
         <BookExperience 

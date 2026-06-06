@@ -3,7 +3,7 @@ import { Mail, Zap, ArrowRight, ShieldAlert } from "lucide-react";
 
 export function PromoCallouts() {
   return (
-    <section className="w-full bg-slate-50 py-4 sm:py-6 px-4 sm:px-6 md:px-12 xl:px-24">
+    <section className="w-full bg-transparent py-4 sm:py-6 px-4 sm:px-6 md:px-12 xl:px-24 relative z-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
         
         {/* Left Card: Need high volume printing? (Navy Blue / Violet) */}
