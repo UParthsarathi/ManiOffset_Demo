@@ -1,15 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { categories, products } from "@/lib/data";
 
-export default function ProductsPage() {
+function ProductsContent() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
+  
   const [selectedCategory, setSelectedCategory] = useState("Books and Publications");
+
+  useEffect(() => {
+    if (categoryParam && categories.some(c => c.name === categoryParam)) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [categoryParam]);
 
   const filteredProducts = products.filter(
     (product) =>
@@ -115,3 +125,12 @@ export default function ProductsPage() {
     </div>
   );
 }
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <ProductsContent />
+    </Suspense>
+  );
+}
+

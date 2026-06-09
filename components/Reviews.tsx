@@ -8,70 +8,70 @@ const REVIEWS = [
     id: 1,
     name: "Rahul Desai",
     role: "Academic Publisher, Mumbai",
-    text: "FeelThe Print has been our trusted partner for over 5 years. Their bulk offset printing for our educational textbooks is unmatched in quality and color consistency. Deliveries are always on time, which is critical for the academic season.",
+    text: "Their bulk offset printing for textbooks is unmatched in quality and color consistency. Deliveries are always on time.",
     rating: 5,
   },
   {
     id: 2,
     name: "Ananya Sharma",
     role: "Marketing Director, Bengaluru",
-    text: "We needed 10,000 premium brochures for our corporate event with a very tight deadline. The team not only delivered ahead of schedule, but the paper quality and premium finish completely exceeded our expectations. Highly recommended!",
+    text: "Delivered premium brochures ahead of a tight schedule. The paper quality and finish exceeded expectations.",
     rating: 5,
   },
   {
     id: 3,
     name: "Vikram Mehta",
-    role: "Banking Operations Manager, Delhi",
-    text: "Security and precision are paramount in our industry. FeelThe Print has consistently supplied secure bank ledgers, challans, and passbooks with flawless binding. Their institutional account management is incredibly professional.",
+    role: "Banking Operations, Delhi",
+    text: "Consistently supplies secure bank ledgers and passbooks with flawless binding. Highly professional.",
     rating: 5,
   },
   {
     id: 4,
     name: "Priya Patel",
     role: "Head of Marketing, Ahmedabad",
-    text: "The monthly wall calendars they printed for our retail chain were stunning. The color reproduction was vibrant, and the paper stock was premium. It really elevated our brand image this year.",
+    text: "The monthly wall calendars were stunning with vibrant color reproduction and premium paper stock.",
     rating: 5,
   },
   {
     id: 5,
     name: "Sanjay Gupta",
     role: "Procurement Head, Chennai",
-    text: "Handling our nationwide distribution of product manuals seemed like a nightmare until we partnered with them. Their zero-error policy and high-volume capacity give us complete peace of mind.",
+    text: "Their zero-error policy and high-volume capacity for our nationwide distribution gives complete peace of mind.",
     rating: 5,
   },
   {
     id: 6,
     name: "Meera Reddy",
     role: "Creative Director, Hyderabad",
-    text: "As an agency, we demand perfection. FeelThe Print's attention to detail on our high-end comic books and graphic novels is extraordinary. They truly understand color profiling and paper dynamics.",
+    text: "Extraordinary attention to detail on our high-end graphic novels. They truly understand color profiling.",
     rating: 5,
   },
   {
     id: 7,
     name: "Amit Kumar",
     role: "Financial Auditor, Pune",
-    text: "Their specialized printing for banking forms and secure deposit slips meets all regulatory compliances. The numbering and barcoding are always perfectly aligned. Excellent technical execution.",
+    text: "Specialized printing meets all compliances. The numbering and barcoding are perfectly aligned.",
     rating: 4,
   },
   {
     id: 8,
     name: "Neha Singh",
     role: "School Principal, Jaipur",
-    text: "We order thousands of school notebooks, diaries, and report cards annually. The binding is durable enough to last the whole academic year, and the print quality makes our institution look prestigious.",
+    text: "The binding on our notebooks is durable, and the excellent print quality makes our institution look prestigious.",
     rating: 5,
   },
   {
     id: 9,
     name: "Karthik Krishnan",
     role: "E-commerce Founder, Kochi",
-    text: "Our product inserts and warranty cards need continuous replenishment. Their turnaround time and inventory management solutions have significantly reduced our overheads. A truly seamless experience.",
+    text: "Their rapid turnaround time and inventory management solutions for warranty cards reduced our overheads.",
     rating: 5,
   },
   {
     id: 10,
     name: "Tanya Kapoor",
     role: "Event Organizer, Chandigarh",
-    text: "The premium foil-stamped invitations they produced for our VIP summit were breathtaking. They guided us on the right paper choices and executed a complex print job flawlessly under pressure.",
+    text: "The premium foil-stamped invitations were breathtaking. They executed a complex print job flawlessly.",
     rating: 5,
   }
 ];
@@ -86,18 +86,15 @@ export function Reviews() {
     return () => clearInterval(timer);
   }, []);
 
-  const getVisibleReviews = () => {
-    return [
-      REVIEWS[startIndex % REVIEWS.length],
-      REVIEWS[(startIndex + 1) % REVIEWS.length],
-      REVIEWS[(startIndex + 2) % REVIEWS.length],
-    ];
-  };
+  const visibleReviews = [
+    REVIEWS[startIndex % REVIEWS.length],
+    REVIEWS[(startIndex + 1) % REVIEWS.length],
+    REVIEWS[(startIndex + 2) % REVIEWS.length],
+  ];
 
-  const visibleReviews = getVisibleReviews();
   return (
     <section className="w-full bg-transparent py-16 px-4 sm:px-6 md:px-12 xl:px-24 relative z-10">
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
+      <div className="max-w-[1400px] mx-auto flex flex-col items-center">
         
         {/* Section Header */}
         <div className="text-center space-y-3 max-w-2xl mx-auto mb-12">
@@ -135,7 +132,7 @@ export function Reviews() {
         </div>
 
         {/* Reviews Grid */}
-        <div className="relative min-h-[400px] w-full">
+        <div className="relative min-h-[350px] w-full">
           <AnimatePresence mode="popLayout">
             <motion.div 
               key={startIndex}
@@ -151,32 +148,29 @@ export function Reviews() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow duration-300"
+                  className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow duration-300 min-h-[250px]"
                 >
-              {/* Subtle background icon */}
-              <Quote className="absolute -top-4 -right-4 w-24 h-24 text-slate-50 opacity-50 rotate-6 group-hover:rotate-12 transition-transform duration-500" />
-              
-              <div>
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-slate-600 font-sans text-sm sm:text-base leading-relaxed italic z-10 relative">
-                  &quot;{review.text}&quot;
-                </p>
-              </div>
-              
-              <div className="mt-8 flex flex-col border-t border-slate-50 pt-4 z-10 relative">
-                <span className="font-serif font-bold text-slate-900 text-base sm:text-lg">
-                  {review.name}
-                </span>
-                <span className="font-mono text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider mt-1">
-                  {review.role}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+                  <Quote className="absolute -top-4 -right-4 w-24 h-24 text-slate-50 opacity-50 rotate-6 group-hover:rotate-12 transition-transform duration-500" />
+                  <div>
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <p className="text-slate-600 font-sans text-sm sm:text-base leading-relaxed italic z-10 relative">
+                      &quot;{review.text}&quot;
+                    </p>
+                  </div>
+                  <div className="mt-6 flex flex-col border-t border-slate-50 pt-4 z-10 relative">
+                    <span className="font-serif font-bold text-slate-900 text-base sm:text-lg">
+                      {review.name}
+                    </span>
+                    <span className="font-mono text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider mt-1">
+                      {review.role}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </AnimatePresence>
         </div>

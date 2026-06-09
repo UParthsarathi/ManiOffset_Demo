@@ -65,9 +65,9 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
 
           {/* Majestic Hero Header */}
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="flex flex-col gap-1 sm:gap-4"
           >
             <span className="text-4xl sm:text-5xl md:text-6xl font-serif font-black text-white tracking-tight leading-tight drop-shadow-lg">
@@ -80,9 +80,9 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
 
           {/* Description Paragraph */}
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="text-slate-300 text-base sm:text-lg md:text-xl leading-relaxed font-sans max-w-xl font-light"
           >
             We deliver unparalleled volume commercial offset printing. From academic textbooks to premium corporate stationery, we bring your most demanding visions to life with absolute precision.
@@ -91,32 +91,43 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
           {/* Action CTAs */}
           <div className="w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
             {/* Catalog Link */}
-            <Link
-              href="/products"
+            <a
+              href="#home-products"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('home-products')?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="px-8 py-4 bg-[#f29a1b] hover:bg-[#de8710] text-white text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg shadow-lg shadow-[#f29a1b]/10 hover:shadow-xl hover:shadow-[#f29a1b]/15 transition-all text-center flex items-center justify-center gap-2 group cursor-pointer"
               id="hero-discover-options-btn"
             >
               <span>Browse Print Catalog</span>
               <ChevronRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
+            {/* 3D Booklet Button */}
+            <button
+              onClick={onLaunchBooklet}
+              className="px-8 py-4 bg-transparent border border-[#f29a1b]/30 hover:border-[#f29a1b]/60 hover:bg-[#f29a1b]/5 text-[#f29a1b] text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition-all text-center flex items-center justify-center gap-2 cursor-pointer group"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Launch 3D Booklet</span>
+            </button>
           </div>
 
-          {/* Prompt to try Interactive 3D layout */}
-          <div className="pt-5 mt-2 border-t border-white/10 flex items-start sm:items-center gap-3.5">
-            <div className="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-lg shrink-0 border border-emerald-500/20">
-              <BookOpen className="w-5 h-5" />
+          {/* Stats Bar */}
+          <div className="pt-8 mt-4 border-t border-white/10 flex items-center gap-6 sm:gap-12">
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-black text-white tracking-tight">28+</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Years Exp.</span>
             </div>
-            <div className="flex flex-col items-start gap-1">
-              <p className="text-[13px] text-white font-medium tracking-wide">
-                Experience all our products in a true 3D booklet
-              </p>
-              <button 
-                onClick={onLaunchBooklet}
-                className="text-amber-400 hover:text-amber-300 font-bold transition-colors inline-flex items-center gap-1 cursor-pointer text-xs uppercase tracking-widest group"
-              >
-                Launch 3D Booklet Viewer
-                <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-              </button>
+            <div className="w-px h-8 bg-white/10"></div>
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-black text-white tracking-tight">10k+</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Projects</span>
+            </div>
+            <div className="w-px h-8 bg-white/10"></div>
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-black text-white tracking-tight">ZERO</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Missed Deadlines</span>
             </div>
           </div>
         </div>
@@ -124,15 +135,15 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
         {/* Right Hand Column: Dynamic Slideshow */}
         <div className="lg:col-span-5 flex justify-center items-center relative py-6">
           <div className="relative w-full max-w-[400px] h-[380px] flex flex-col items-center justify-center">
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <motion.div
                 key={currentSlide}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
                 onClick={onLaunchBooklet}
-                className="relative w-[280px] h-[340px] md:w-[300px] md:h-[380px] bg-slate-900 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden hover:-translate-y-2 transition-transform duration-500 cursor-pointer border border-white/10 group"
+                className="absolute w-[280px] h-[340px] md:w-[300px] md:h-[380px] bg-slate-900 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden hover:-translate-y-2 transition-transform duration-500 cursor-pointer border border-white/10 group"
               >
                 {/* Book Cover Image Array Showcase */}
                 <div className="absolute inset-0 bg-slate-800">
@@ -165,13 +176,13 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
 
             {/* Slideshow Title & Indicators */}
             <div className="absolute -bottom-6 w-full flex flex-col items-center gap-4">
-               <AnimatePresence mode="wait">
+               <AnimatePresence>
                  <motion.div
                    key={`title-${currentSlide}`}
-                   initial={{ opacity: 0, y: 10 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   exit={{ opacity: 0, y: -10 }}
-                   transition={{ duration: 0.3 }}
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   exit={{ opacity: 0 }}
+                   transition={{ duration: 0.8, ease: "easeInOut" }}
                    className="text-white font-serif text-2xl tracking-wide font-medium text-center drop-shadow-md"
                  >
                    {slides[currentSlide].title}

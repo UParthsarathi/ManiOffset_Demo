@@ -67,7 +67,7 @@ export function PromoCallouts() {
               id="fast-delivery-btn"
             >
               <Zap className="w-4 h-4 text-amber-200 fill-amber-200" />
-              <span>Learn about Express Delivery</span>
+              <span>Need Express Delivery?</span>
             </button>
           </div>
         </div>

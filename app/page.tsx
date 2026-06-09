@@ -32,11 +32,11 @@ export default function Home() {
         onLaunchBooklet={() => setIsBookletActive(true)} 
       />
 
-      {/* 3. Products Section - Searchable grid of printing services */}
-      <ProductsSection />
-
       {/* 5. Double Promo Callous Row - High-volume and Fast deadlines boxes (Mimicking Screenshot 3) */}
       <PromoCallouts />
+
+      {/* 3. Products Section - Searchable grid of printing services */}
+      <ProductsSection />
 
       {/* Reviews Section */}
       <Reviews />

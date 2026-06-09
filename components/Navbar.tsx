@@ -108,8 +108,8 @@ export function Navbar() {
           <span>contact@feeltheprint.com</span>
         </div>
         <div className="flex items-center gap-4 sm:gap-6 text-slate-300 font-sans">
-          <Link href="#about" className="text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest text-[10px] bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-bold flex items-center gap-1">ABOUT US</Link>
-          <Link href="#press" className="hover:text-amber-500 transition-colors uppercase tracking-widest text-[10px]">PRESS</Link>
+          <Link href="/about" className="text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest text-[10px] bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-bold flex items-center gap-1">ABOUT US</Link>
+          <Link href="/press" className="hover:text-amber-500 transition-colors uppercase tracking-widest text-[10px]">PRESS</Link>
           <span className="text-slate-600">|</span>
           <Link href="#track" className="hover:text-amber-500 transition-colors uppercase tracking-widest text-[10px]">TRACK ORDER</Link>
           <span className="text-slate-600">|</span>
