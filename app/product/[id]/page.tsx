@@ -38,27 +38,27 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         </div>
       </div>
 
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-8 lg:gap-12">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
         {/* Left: Product Image */}
-        <div className="w-full md:w-5/12 flex flex-col shrink-0">
-          <div className="relative aspect-[4/3] md:aspect-square w-full bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+        <div className="w-full lg:w-4/12 flex flex-col shrink-0">
+          <div className="relative aspect-[4/3] w-full bg-white border border-slate-200 rounded-lg overflow-hidden flex items-center justify-center p-4">
             <Image 
               src={product.imageUrl}
               alt={product.title}
               fill
-              className="object-cover"
+              className="object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
           
           <div className="grid grid-cols-4 gap-3 mt-3">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className={`relative aspect-square bg-slate-100 rounded-md overflow-hidden cursor-pointer border ${i === 0 ? 'border-slate-800 ring-1 ring-slate-800' : 'border-slate-200 hover:border-slate-400'}`}>
+              <div key={i} className={`relative aspect-square bg-white rounded-md overflow-hidden cursor-pointer border p-1 ${i === 0 ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-200 hover:border-amber-500'}`}>
                 <Image 
                   src={`${product.imageUrl}?random=${i}`}
                   alt={`${product.title} thumbnail`}
                   fill
-                  className="object-cover opacity-90 transition-opacity hover:opacity-100"
+                  className="object-contain"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -66,87 +66,107 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </div>
         </div>
 
-        {/* Right: Product Details & Checkout Configuration */}
-        <div className="w-full md:w-7/12 flex flex-col space-y-6">
-          <div className="border-b border-slate-200 pb-5">
-            <div className="inline-block text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2">
-              {product.categoryLabel}
+        {/* Middle: Product Details */}
+        <div className="w-full lg:w-5/12 flex flex-col space-y-4">
+          <div className="border-b border-slate-200 pb-4">
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-tight mb-2">{product.title}</h1>
+            <div className="flex items-center gap-2 text-sm text-slate-600">
+                <span className="text-slate-700 font-bold flex items-center">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
+                  Available for Production
+                </span>
+                <span className="text-slate-300">|</span>
+                <span className="hover:text-amber-600 hover:underline transition-colors cursor-pointer text-slate-500">Request Custom Quote</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-2.5">{product.title}</h1>
-            <p className="text-sm text-slate-600 leading-relaxed mb-4">
-              {product.description} We offer premium quality prints with quick turnaround times and bulk pricing. Custom dimensions available on request.
+          </div>
+
+          <div className="py-2">
+            <h3 className="font-bold text-base text-slate-900 mb-3">About this item</h3>
+            <ul className="list-disc pl-5 text-sm text-slate-800 space-y-2 mb-6">
+              <li><strong>Premium Printing:</strong> High-fidelity color reproduction tailored for commercial {product.categoryLabel.toLowerCase()} products.</li>
+              <li><strong>Customizable Configurations:</strong> Select precise quantity, paper stock, and dimensions in the order panel.</li>
+              <li><strong>Minimum Order Quantity:</strong> This product requires a minimum order of 500 units.</li>
+              <li><strong>Quality Assurance:</strong> Backed by our multi-point industrial inspection protocol.</li>
+            </ul>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              {product.description} Utilize our world-class offset methodology to mass-produce your materials with unmatched reliability and cost-efficiency at scale.
             </p>
             
-            <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-700 bg-slate-100 rounded-lg p-3">
-              <div className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-emerald-600" />
-                Custom Size
+            <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700 mt-6 pt-6 border-t border-slate-200">
+              <div className="flex items-center gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-md">
+                <Check className="w-4 h-4 text-emerald-600" /> Pre-Flight Check included
               </div>
-              <div className="flex items-center gap-1.5">
-                <Shield className="w-4 h-4 text-blue-600" />
-                Quality Check
+              <div className="flex items-center gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-md">
+                <Shield className="w-4 h-4 text-blue-600" /> ISO Certified Output
               </div>
-              <div className="flex items-center gap-1.5">
-                <Truck className="w-4 h-4 text-slate-800" />
-                Fast Shipping
+              <div className="flex items-center gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-md">
+                <Truck className="w-4 h-4 text-amber-600" /> Nationwide Freight dispatch
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="pt-2">
-            <h2 className="text-sm font-bold text-slate-900 tracking-wide uppercase mb-4">Configuration</h2>
-            
-            <form className="space-y-5">
-              {/* Row: Quantity & Paper Type */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Quantity</label>
-                  <select className="w-full bg-white border border-slate-300 rounded-md py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-slate-800 transition-all shadow-sm">
-                    <option>100 copies</option>
-                    <option>250 copies</option>
-                    <option>500 copies (Best Value)</option>
-                    <option>1000 copies</option>
-                    <option>2000+ copies</option>
-                  </select>
-                </div>
+        {/* Right: Buy Box / Configuration */}
+        <div className="w-full lg:w-3/12 flex flex-col shrink-0">
+            <div className="border border-slate-200 rounded-xl p-5 shadow-sm bg-white sticky top-24">
+                <div className="text-lg font-bold text-slate-900 mb-1">Order Configuration</div>
+                <div className="text-xs text-slate-500 mb-5">Select volume & specs to lock in pricing</div>
+                
+                <form className="space-y-4">
+                    <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-1.5">Quantity</label>
+                        <select className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-all">
+                            <option>100 copies</option>
+                            <option>250 copies</option>
+                            <option>500 copies (Most Popular)</option>
+                            <option>1000 copies</option>
+                            <option>Custom Volume</option>
+                        </select>
+                    </div>
 
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Paper Type</label>
-                  <select className="w-full bg-white border border-slate-300 rounded-md py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-800 focus:border-slate-800 transition-all shadow-sm">
-                    <option>Premium Matte (100gsm)</option>
-                    <option>Glossy Art (130gsm)</option>
-                    <option>Textured Laid (120gsm)</option>
-                  </select>
-                </div>
-              </div>
+                    <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-1.5">Paper Stock</label>
+                        <select className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-all">
+                            <option>100gsm Premium Matte</option>
+                            <option>130gsm Glossy Art</option>
+                            <option>120gsm Textured Soft</option>
+                        </select>
+                    </div>
 
-              {/* Finishing Options */}
-              <div>
-                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Finishing Options</label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <label className="flex items-center p-2.5 border border-slate-200 rounded-md cursor-pointer hover:bg-slate-50 transition-colors">
-                    <input type="checkbox" className="w-3.5 h-3.5 text-slate-900 rounded border-slate-300 focus:ring-slate-900" />
-                    <span className="ml-2.5 text-xs text-slate-700 font-medium">Lamination (Gloss/Matte)</span>
-                  </label>
-                  <label className="flex items-center p-2.5 border border-slate-200 rounded-md cursor-pointer hover:bg-slate-50 transition-colors">
-                    <input type="checkbox" className="w-3.5 h-3.5 text-slate-900 rounded border-slate-300 focus:ring-slate-900" />
-                    <span className="ml-2.5 text-xs text-slate-700 font-medium">Spot UV / Foiling</span>
-                  </label>
-                </div>
-              </div>
+                    <div>
+                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-1.5">Base Finishing</label>
+                        <select className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-all">
+                            <option>Standard Trim</option>
+                            <option>Aqueous Coating</option>
+                            <option>Gloss Lamination</option>
+                        </select>
+                    </div>
 
-              <div className="pt-6">
-                <button type="button" className="w-full flex items-center justify-center py-3.5 px-4 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-widest rounded-lg shadow-sm hover:shadow transition-all gap-2 group">
-                  Proceed to Checkout
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <p className="text-center text-[11px] text-slate-400 mt-3 hidden sm:block">
-                  Final pricing is calculated based on exact dimensions and file verification.
-                </p>
-              </div>
-            </form>
-          </div>
-          
+                    <div className="pt-5 space-y-3">
+                        <button type="button" className="w-full flex items-center justify-center py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900">
+                            Add to Requisition
+                        </button>
+                        <button type="button" className="w-full flex items-center justify-center py-3 px-4 bg-white border border-slate-300 hover:border-slate-800 hover:bg-slate-50 text-slate-900 text-sm font-bold rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900">
+                            Calculate Direct Price
+                        </button>
+                    </div>
+
+                    <div className="pt-4 text-[11px] text-slate-500 flex flex-col gap-2 border-t border-slate-100 mt-4">
+                        <div className="flex justify-between items-center">
+                            <span>Production Lead</span>
+                            <span className="font-medium text-slate-700">5-7 Business Days</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <span>Processing</span>
+                            <span className="font-medium text-slate-700">Mani Offset 24/7 Facility</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <span>Guarantee</span>
+                            <span className="font-medium text-blue-600 hover:underline cursor-pointer">Zero-Defect Tolerances</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
       </main>
 

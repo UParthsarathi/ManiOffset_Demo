@@ -3,68 +3,18 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { Search, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { products as PRODUCT_DATA, categories as dataCategories } from "@/lib/data";
 
-// Mock Product Data integrated directly to avoid external sync issues for now
-const PRODUCT_DATA = [
-  // BOOKS & PUBLICATIONS
-  { id: "p1", category: "BOOKS & PUBLICATIONS", title: "Softcover Books", image: "https://picsum.photos/seed/softcover/800/800", moq: 500, discount: 10 },
-  { id: "p2", category: "BOOKS & PUBLICATIONS", title: "Hardcover Books", image: "https://picsum.photos/seed/hardcover/800/800", moq: 250, discount: 15 },
-  { id: "p3", category: "BOOKS & PUBLICATIONS", title: "Magazines and Journals", image: "https://picsum.photos/seed/magazines/800/800", moq: 1000, discount: 5 },
-  { id: "p4", category: "BOOKS & PUBLICATIONS", title: "Comics and Graphic Novels", image: "https://picsum.photos/seed/comics/800/800", moq: 500, discount: 0 },
-  { id: "p5", category: "BOOKS & PUBLICATIONS", title: "Religious and Spiritual Books", image: "https://picsum.photos/seed/religious/800/800", moq: 1000, discount: 20 },
-
-  // ACADEMIC & EDUCATIONAL
-  { id: "p6", category: "ACADEMIC & EDUCATIONAL", title: "Textbooks & Guides", image: "https://picsum.photos/seed/textbooks/800/800", moq: 1000, discount: 15 },
-  { id: "p7", category: "ACADEMIC & EDUCATIONAL", title: "School Notebooks", image: "https://picsum.photos/seed/notebooks/800/800", moq: 2000, discount: 25 },
-  { id: "p8", category: "ACADEMIC & EDUCATIONAL", title: "Academic Diaries", image: "https://picsum.photos/seed/diaries/800/800", moq: 500, discount: 10 },
-  { id: "p9", category: "ACADEMIC & EDUCATIONAL", title: "Record Books", image: "https://picsum.photos/seed/records/800/800", moq: 500, discount: 0 },
-  { id: "p10", category: "ACADEMIC & EDUCATIONAL", title: "Application Forms", image: "https://picsum.photos/seed/forms/800/800", moq: 5000, discount: 30 },
-  { id: "p11", category: "ACADEMIC & EDUCATIONAL", title: "Report Cards & Certificates", image: "https://picsum.photos/seed/certificates/800/800", moq: 1000, discount: 5 },
-  { id: "p12", category: "ACADEMIC & EDUCATIONAL", title: "Educational Charts", image: "https://picsum.photos/seed/charts/800/800", moq: 500, discount: 0 },
-
-  // MARKETING & PROMOTIONAL
-  { id: "p13", category: "MARKETING & PROMOTIONAL", title: "Flyers & Leaflets", image: "https://picsum.photos/seed/flyers/800/800", moq: 5000, discount: 40 },
-  { id: "p14", category: "MARKETING & PROMOTIONAL", title: "Brochures and Booklets", image: "https://picsum.photos/seed/brochures/800/800", moq: 1000, discount: 15 },
-  { id: "p15", category: "MARKETING & PROMOTIONAL", title: "Product Catalogues", image: "https://picsum.photos/seed/catalogues/800/800", moq: 500, discount: 10 },
-  { id: "p16", category: "MARKETING & PROMOTIONAL", title: "Monthly Wall Calendars", image: "https://picsum.photos/seed/calendars/800/800", moq: 1000, discount: 20 },
-  { id: "p17", category: "MARKETING & PROMOTIONAL", title: "Corporate Invitations", image: "https://picsum.photos/seed/invitations/800/800", moq: 250, discount: 0 },
-  { id: "p18", category: "MARKETING & PROMOTIONAL", title: "Postcards", image: "https://picsum.photos/seed/postcards/800/800", moq: 1000, discount: 5 },
-
-  // BUSINESS & CORPORATE
-  { id: "p19", category: "BUSINESS & CORPORATE", title: "Visiting Cards", image: "https://picsum.photos/seed/visiting/800/800", moq: 1000, discount: 10 },
-  { id: "p20", category: "BUSINESS & CORPORATE", title: "Letterheads and Envelopes", image: "https://picsum.photos/seed/letterheads/800/800", moq: 2000, discount: 15 },
-  { id: "p21", category: "BUSINESS & CORPORATE", title: "Business Planners", image: "https://picsum.photos/seed/planners/800/800", moq: 250, discount: 0 },
-  { id: "p22", category: "BUSINESS & CORPORATE", title: "Company Folders", image: "https://picsum.photos/seed/folders/800/800", moq: 500, discount: 5 },
-  { id: "p23", category: "BUSINESS & CORPORATE", title: "Certificates & Awards", image: "https://picsum.photos/seed/awards/800/800", moq: 100, discount: 0 },
-
-  // BANKING & FINANCIAL
-  { id: "p24", category: "BANKING & FINANCIAL", title: "Passbooks", image: "https://picsum.photos/seed/passbooks/800/800", moq: 5000, discount: 25 },
-  { id: "p25", category: "BANKING & FINANCIAL", title: "Challans & Deposit Slips", image: "https://picsum.photos/seed/challans/800/800", moq: 10000, discount: 35 },
-  { id: "p26", category: "BANKING & FINANCIAL", title: "Banking Forms", image: "https://picsum.photos/seed/bankingforms/800/800", moq: 10000, discount: 30 },
-
-  // PRODUCT SUPPORT MATERIALS
-  { id: "p27", category: "PRODUCT SUPPORT MATERIALS", title: "Instruction Manuals", image: "https://picsum.photos/seed/manuals/800/800", moq: 2000, discount: 15 },
-  { id: "p28", category: "PRODUCT SUPPORT MATERIALS", title: "Product Inserts", image: "https://picsum.photos/seed/inserts/800/800", moq: 5000, discount: 20 },
-  { id: "p29", category: "PRODUCT SUPPORT MATERIALS", title: "Warranty & Service Cards", image: "https://picsum.photos/seed/warranty/800/800", moq: 2000, discount: 10 },
-];
-
-const CATEGORIES = [
-  "BOOKS & PUBLICATIONS",
-  "ACADEMIC & EDUCATIONAL",
-  "MARKETING & PROMOTIONAL",
-  "BUSINESS & CORPORATE",
-  "BANKING & FINANCIAL",
-  "PRODUCT SUPPORT MATERIALS",
-  "ALL"
-];
+const CATEGORIES = dataCategories.map(c => c.name);
 
 export function ProductsSection() {
-  const [activeCategory, setActiveCategory] = useState("BOOKS & PUBLICATIONS");
+  const [activeCategory, setActiveCategory] = useState("Books and Publications");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredProducts = useMemo(() => {
     return PRODUCT_DATA.filter((product) => {
-      const matchCategory = activeCategory === "ALL" || product.category === activeCategory;
+      const matchCategory = activeCategory === "All Products" || product.category === activeCategory;
       const matchSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.category.toLowerCase().includes(searchQuery.toLowerCase());
       return matchCategory && matchSearch;
@@ -167,43 +117,30 @@ export function ProductsSection() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
                 key={product.id} 
-                className="group cursor-pointer flex flex-col"
               >
-                {/* Image Container - Square for density */}
-                <div className="relative aspect-square w-full overflow-hidden bg-slate-100 rounded-lg mb-3 shadow-sm border border-slate-100/50">
-                  {/* Badges - Ultracompact */}
-                  <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-                    {product.discount > 0 && (
-                      <span className="bg-amber-500 text-white font-mono text-[8px] sm:text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded shadow-sm inline-block">
-                        -{product.discount}%
-                      </span>
-                    )}
-                  </div>
-                  <div className="absolute top-2 right-2 z-10">
-                    <span className="bg-white/90 backdrop-blur text-slate-800 font-mono text-[8px] sm:text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded uppercase shadow-sm inline-block">
-                      MOQ {product.moq}
-                    </span>
+                <div onClick={() => window.location.href = `/product/${product.id}`} className="group cursor-pointer flex flex-col h-full">
+                  {/* Image Container - Square for density */}
+                  <div className="relative aspect-square w-full overflow-hidden bg-slate-100 rounded-lg mb-3 shadow-sm border border-slate-100/50">
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.title}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors duration-300" />
                   </div>
 
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors duration-300" />
-                </div>
-
-                {/* Content - Tight Spacing */}
-                <div className="flex flex-col text-left px-1">
-                  <p className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400 uppercase mb-0.5 truncate">
-                    {product.category}
-                  </p>
-                  <h4 className="font-serif font-bold text-sm sm:text-base text-slate-900 tracking-tight leading-snug group-hover:text-amber-600 transition-colors duration-200 line-clamp-2">
-                    {product.title}
-                  </h4>
+                  {/* Content - Tight Spacing */}
+                  <div className="flex flex-col text-left px-1">
+                    <p className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400 uppercase mb-0.5 truncate">
+                      {product.categoryLabel}
+                    </p>
+                    <h4 className="font-serif font-bold text-sm sm:text-base text-slate-900 tracking-tight leading-snug group-hover:text-amber-600 transition-colors duration-200 line-clamp-2">
+                      {product.title}
+                    </h4>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -223,6 +160,13 @@ export function ProductsSection() {
              </motion.div>
           )}
         </motion.div>
+        
+        {/* Sync link to all products */}
+        <div className="flex justify-center mt-4">
+          <Link href={`/products?category=${encodeURIComponent(activeCategory)}`} className="text-sm font-semibold text-[#005fb3] hover:underline flex items-center gap-1 group">
+            View all {activeCategory} options <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </div>
     </section>
   );

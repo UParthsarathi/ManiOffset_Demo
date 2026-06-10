@@ -65,6 +65,7 @@ export function PromoCallouts() {
             <button 
               className="px-5 py-2.5 bg-[#f29a1b] hover:bg-[#de8710] text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-lg transition-all shadow-sm active:scale-[0.98] cursor-pointer inline-flex items-center gap-2"
               id="fast-delivery-btn"
+              onClick={() => window.location.href = "mailto:express@feeltheprint.com?subject=Express Delivery Request"}
             >
               <Zap className="w-4 h-4 text-amber-200 fill-amber-200" />
               <span>Need Express Delivery?</span>

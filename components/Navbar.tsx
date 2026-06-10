@@ -146,6 +146,10 @@ export function Navbar() {
           <div className="relative h-full shrink-0" onMouseLeave={() => { setShowCategories(false); setActiveCategory(null); }}>
             <button 
               onMouseEnter={() => setShowCategories(true)}
+              onClick={() => {
+                setShowCategories(false);
+                router.push('/products');
+              }}
               className="px-4 h-full bg-[#f29a1b] hover:bg-[#de8710] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer w-64 justify-between rounded-l-lg"
             >
               <div className="flex items-center gap-2">
