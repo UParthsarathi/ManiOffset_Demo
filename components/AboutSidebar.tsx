@@ -8,11 +8,11 @@ export function AboutSidebar() {
   const pathname = usePathname();
 
   const resourceLinks = [
-    { href: "/about", label: "About Us", isActive: pathname.startsWith("/about") },
-    { href: "#history", label: "Our History", isActive: false },
-    { href: "#mission", label: "Mission & Values", isActive: false },
-    { href: "#leadership", label: "Leadership", isActive: false },
-    { href: "#careers", label: "Careers", isActive: false },
+    { href: "/about", label: "About Us", isActive: pathname === "/about" || (pathname.startsWith("/about/") && !["/about/history", "/about/mission", "/about/leadership", "/about/careers"].includes(pathname)) },
+    { href: "/about/history", label: "Our History", isActive: pathname.startsWith("/about/history") },
+    { href: "/about/mission", label: "Mission & Values", isActive: pathname.startsWith("/about/mission") },
+    { href: "/about/leadership", label: "Leadership", isActive: pathname.startsWith("/about/leadership") },
+    { href: "/about/careers", label: "Careers", isActive: pathname.startsWith("/about/careers") },
   ];
 
   const academyLinks = [

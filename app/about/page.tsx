@@ -5,11 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 export default function AboutPage() {
   return (
     <div className="w-full">
-      <div className="text-[13px] font-sans mb-8 text-[#e51d2e] flex items-center flex-wrap gap-1.5">
-        <Link href="/" className="hover:underline">Home</Link>
-        <span className="text-slate-400">›</span>
-        <span className="text-slate-900">About Us</span>
-      </div>
+      <Breadcrumbs items={[{ label: "About Us" }]} />
       
       <h1 className="text-[36px] md:text-[44px] font-bold text-[#20283c] tracking-tight mb-2 font-sans">
         About Mani Offset
@@ -19,11 +15,11 @@ export default function AboutPage() {
       </p>
 
       <div className="prose prose-slate max-w-none text-[15px] leading-relaxed text-slate-700">
-        <p className="mb-4 text-xl text-slate-800 font-medium">
-          Crafting Precision Since 1995.
+        <p className="mb-4 text-xl text-slate-800 font-medium leading-snug">
+          Crafting Precision at Industrial Scale. Three decades of print perfection.
         </p>
         <p className="mb-8">
-          Welcome to Mani Offset Press, the parent enterprise behind FeelThePrint. We have been the backbone of high-volume commercial printing operations for nearly three decades, combining heritage craftsmanship with modern technology to deliver unmatched quality to our clients.
+          Welcome to Mani Offset Press, the expansive parent enterprise powering the digital storefront FeelThePrint. Situated in the heart of Sivakasi, South India&apos;s historic printing hub, we have operated as the silent backbone for high-volume commercial offset printing operations for nearly three decades. We seamlessly bridge the heritage of tactile craftsmanship with the relentless efficiency of an ultra-modern, automated supply chain—delivering unmatched structural quality, razor-sharp color fidelity, and absolute logistical reliability to our national and international partners.
         </p>
 
         <div className="relative aspect-[21/9] rounded overflow-hidden shadow-sm border border-slate-200 mb-10">
@@ -31,36 +27,36 @@ export default function AboutPage() {
             src="https://picsum.photos/seed/printingpress1/1200/500" 
             alt="Mani Offset Facility" 
             fill 
-            className="object-cover" 
+            className="object-cover grayscale hover:grayscale-0 transition-all duration-700" 
             referrerPolicy="no-referrer" 
           />
         </div>
 
-        <h3 className="text-2xl font-bold text-[#20283c] mb-4 mt-8">Our Mission</h3>
+        <h3 className="text-2xl font-bold text-[#20283c] mb-4 mt-8">The Scope of Our Operations</h3>
         <p className="mb-6">
-          At Mani Offset, our primary mission is to deliver uncompromising print quality through rigorous standard operating procedures. We bridge the gap between traditional offset techniques and contemporary automation, ensuring that every batch—from secure financial forms to premium packaging—meets exact client specifications.
+          Commercial printing is no longer just about putting ink on paper; it is an exercise in complex industrial manufacturing logistics. Our sprawling 200,000-square-foot production campus is engineered for 24/7 continuous throughput. From the meticulous processing of massive thermal plates in our climate-sealed Pre-Press laboratories to the earth-shaking velocity of our German-engineered multi-color Heidelberg press lines running at 18,000 impressions per hour, we handle monumental workloads. We mass-produce high-end educational catalogs, rigidly verified secure financial forms, mathematically complex heavy-duty packaging structures, and massive runs of corporate collateral.
         </p>
 
-        <h3 className="text-2xl font-bold text-[#20283c] mb-4 mt-8">The Legacy</h3>
+        <h3 className="text-2xl font-bold text-[#20283c] mb-4 mt-8">The Philosophy of &apos;Zero-Defect&apos;</h3>
         <p className="mb-6">
-          Founded in Sivakasi, the heart of India&apos;s printing industry, Mani Offset began as a modest operation focused on meticulous manual binding and rudimentary offset work. Over the decades, we&apos;ve expanded our footprint, acquiring state-of-the-art multi-color machines and establishing a rigorous quality assurance protocol.
+          At Mani Offset, our foundational mission is to eliminate print variance. To us, quality control is not an endpoint inspection but a deeply integrated obsession throughout the lifecycle of the job. We rely heavily on spectrophotometric analysis, delta-E monitoring, high-speed inline mechanical camera arrays, and an unrelenting commitment to global ISO color standards. Whether we are producing the primary run of a sensitive cosmetics carton or a multi-million page educational digest, our mandate is that the final output maintains absolute structural integrity and optical fidelity from sheet #1 to sheet #200,000.
         </p>
         <p className="mb-8">
-          Today, our name stands as a benchmark for reliability in the commercial print sector across South India.
+          Through intense technological investments and standard operating procedures refined over thousands of press shifts, the Mani Offset banner has become synonymous with the highest benchmark of reliability in the commercial print sector. We don&apos;t just execute jobs; we engineer perfect predictability.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10">
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 group">
             <div className="relative aspect-[4/3] rounded overflow-hidden shadow-sm border border-slate-200">
-              <Image src="https://picsum.photos/seed/pressfacility/600/400" alt="Our Facilities" fill className="object-cover" referrerPolicy="no-referrer" />
+              <Image src="https://picsum.photos/seed/pressfacility/600/400" alt="Our Facilities" fill className="object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
             </div>
-            <Link href="/about/facilities" className="text-[#005fb3] text-[15px] hover:underline font-semibold">Explore Our Facilities</Link>
+            <Link href="/about/facilities" className="text-[#005fb3] text-[15px] hover:underline font-semibold tracking-wide">Take a Tour of Our Facilities →</Link>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 group">
             <div className="relative aspect-[4/3] rounded overflow-hidden shadow-sm border border-slate-200">
-              <Image src="https://picsum.photos/seed/pressquality/600/400" alt="Quality Assurance" fill className="object-cover" referrerPolicy="no-referrer" />
+              <Image src="https://picsum.photos/seed/pressquality/600/400" alt="Quality Assurance" fill className="object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
             </div>
-            <Link href="/about/quality-assurance" className="text-[#005fb3] text-[15px] hover:underline font-semibold">Our Quality Protocol</Link>
+            <Link href="/about/quality-assurance" className="text-[#005fb3] text-[15px] hover:underline font-semibold tracking-wide">Review Our ISO Quality Protocols →</Link>
           </div>
         </div>
       </div>

@@ -8,11 +8,11 @@ export function PressSidebar() {
   const pathname = usePathname();
 
   const resourceLinks = [
-    { href: "/press", label: "Printing Academy", isActive: pathname.startsWith("/press") },
-    { href: "#options", label: "Printing Options", isActive: false },
-    { href: "#standards", label: "Industry Standards", isActive: false },
-    { href: "#process", label: "Process", isActive: false },
-    { href: "#checklist", label: "File Setup Checklist", isActive: false },
+    { href: "/press", label: "Printing Academy", isActive: pathname === "/press" || (pathname.startsWith("/press/") && !["/press/options", "/press/standards", "/press/process", "/press/checklist"].includes(pathname)) },
+    { href: "/press/options", label: "Printing Options", isActive: pathname.startsWith("/press/options") },
+    { href: "/press/standards", label: "Industry Standards", isActive: pathname.startsWith("/press/standards") },
+    { href: "/press/process", label: "Process", isActive: pathname.startsWith("/press/process") },
+    { href: "/press/checklist", label: "File Setup Checklist", isActive: pathname.startsWith("/press/checklist") },
   ];
 
   const academyLinks = [
@@ -20,8 +20,8 @@ export function PressSidebar() {
     { href: "/press/pre-press", label: "Pre-Press" },
     { href: "/press/printing", label: "Press" },
     { href: "/press/post-press", label: "Post-Press" },
-    { href: "#advanced", label: "Advanced Concepts" },
-    { href: "#logistics", label: "Logistics" },
+    { href: "/press/advanced", label: "Advanced Concepts" },
+    { href: "/press/logistics", label: "Logistics" },
   ];
 
   return (
