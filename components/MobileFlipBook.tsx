@@ -26,6 +26,7 @@ Page.displayName = "Page";
 export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
   const router = useRouter();
   const bookRef = useRef<any>(null);
+  const touchStartRef = useRef<{x: number, y: number} | null>(null);
 
   const handleItemClick = (id: number) => {
     router.push(`/product/${id}`);
@@ -80,6 +81,7 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
           mobileScrollSupport={true}
           usePortrait={true}
           flippingTime={700}
+          disableFlipByClick={true}
           className="flip-book shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
         >
           {/* Cover Page */}
@@ -138,9 +140,26 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div 
                    className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 pb-12 relative z-20 space-y-4 pl-8" 
                    style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+                   onTouchStart={(e) => {
+                     touchStartRef.current = {
+                       x: e.touches[0].clientX,
+                       y: e.touches[0].clientY,
+                     };
+                   }}
+                   onTouchMove={(e) => {
+                     if (!touchStartRef.current) return;
+                     const dx = Math.abs(e.touches[0].clientX - touchStartRef.current.x);
+                     const dy = Math.abs(e.touches[0].clientY - touchStartRef.current.y);
+                     
+                     // If moving vertically more than horizontally, it's a scroll.
+                     // Stop propagation to prevent flipbook from turning the page.
+                     if (dy > dx) {
+                       e.stopPropagation();
+                     }
+                   }}
                    onPointerDown={(e) => {
-                     // We allow pointer events so they can scroll natively within the div.
-                     e.stopPropagation();
+                      // We don't indiscriminately stop propagation anymore, 
+                      // so dragging left/right works!
                    }}
                 >
                   {category.items.map((item, idx) => (
