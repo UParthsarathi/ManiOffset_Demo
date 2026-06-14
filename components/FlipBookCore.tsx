@@ -200,12 +200,12 @@ export function FlipBookCore({ onClose }: { onClose?: () => void }) {
       
       <div className="fixed bottom-8 flex justify-center w-full z-50 pointer-events-none">
         <span className="text-white/60 text-[10px] sm:text-xs font-bold uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur border border-white/5">
-            Scroll to flip
+            Drag or click corners to flip
         </span>
       </div>
 
       <div 
-         className="w-[90vw] md:w-[65vw] max-w-[825px] h-[65vh] md:h-[60vh] max-h-[560px] flex justify-center items-center perspective-[2000px] relative z-[80] my-auto"
+         className="w-[65vw] sm:w-[65vw] max-w-[825px] h-[55vh] sm:h-[60vh] max-h-[560px] flex justify-center items-center perspective-[2000px] relative z-[80] my-auto"
       >
         <HTMLFlipBook 
           ref={bookRef}
@@ -219,9 +219,8 @@ export function FlipBookCore({ onClose }: { onClose?: () => void }) {
           maxShadowOpacity={0.4}
           showCover={true}
           mobileScrollSupport={true}
-          useMouseEvents={false}
-          usePortrait={true}
           flippingTime={800}
+          disableFlipByClick={true}
           className="flip-book shadow-2xl"
         >
           {/* Cover */}
