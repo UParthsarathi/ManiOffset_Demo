@@ -26,7 +26,7 @@ Page.displayName = "Page";
 export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
   const router = useRouter();
   const bookRef = useRef<any>(null);
-  const touchStartRef = useRef<{x: number, y: number} | null>(null);
+  const touchStartRef = useRef<{x: number, y: number, time: number} | null>(null);
 
   const handleItemClick = (id: number) => {
     router.push(`/product/${id}`);
@@ -40,6 +40,35 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
       items: products.filter(p => p.category === c.name)
     }))
     .filter(c => c.items.length > 0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+      time: Date.now()
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartRef.current || !bookRef.current) return;
+    
+    const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+    const dt = Date.now() - touchStartRef.current.time;
+
+    // Detect horizontal swipe
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40 && dt < 500) {
+      if (dx < 0) {
+        // swipe left -> next page
+        bookRef.current.pageFlip().flipNext();
+      } else {
+        // swipe right -> prev page
+        bookRef.current.pageFlip().flipPrev();
+      }
+    }
+    
+    touchStartRef.current = null;
+  };
 
   return (
     <div 
@@ -61,12 +90,16 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
       
       <div className="fixed bottom-8 flex justify-center w-full z-[110] pointer-events-none">
         <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur border border-white/5 shadow-2xl">
-            Swipe left or right to flip
+            Swipe left/right to flip
         </span>
       </div>
 
       {/* Main Flipbook wrapper */}
-      <div className="w-full h-full pt-20 pb-24 px-4 flex justify-center items-center perspective-[2000px] relative z-[80]">
+      <div 
+        className="w-full h-full pt-20 pb-24 px-4 flex justify-center items-center perspective-[2000px] relative z-[80]"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <HTMLFlipBook 
           ref={bookRef}
           width={330} 
@@ -78,7 +111,8 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
           maxHeight={750}
           maxShadowOpacity={0.8}
           showCover={true}
-          mobileScrollSupport={true}
+          mobileScrollSupport={false} // completely disable internal swiping to avoid conflicts
+          useMouseEvents={false} // completely disable internal pointer processing
           usePortrait={true}
           flippingTime={700}
           disableFlipByClick={true}
@@ -140,27 +174,6 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div 
                    className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 pb-12 relative z-20 space-y-4 pl-8" 
                    style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
-                   onTouchStart={(e) => {
-                     touchStartRef.current = {
-                       x: e.touches[0].clientX,
-                       y: e.touches[0].clientY,
-                     };
-                   }}
-                   onTouchMove={(e) => {
-                     if (!touchStartRef.current) return;
-                     const dx = Math.abs(e.touches[0].clientX - touchStartRef.current.x);
-                     const dy = Math.abs(e.touches[0].clientY - touchStartRef.current.y);
-                     
-                     // If moving vertically more than horizontally, it's a scroll.
-                     // Stop propagation to prevent flipbook from turning the page.
-                     if (dy > dx) {
-                       e.stopPropagation();
-                     }
-                   }}
-                   onPointerDown={(e) => {
-                      // We don't indiscriminately stop propagation anymore, 
-                      // so dragging left/right works!
-                   }}
                 >
                   {category.items.map((item, idx) => (
                     <div 
