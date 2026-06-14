@@ -25,7 +25,7 @@ export default function Home() {
       )}
 
       {/* 1. Header & Navigation (Mimicking Screenshot 1) */}
-      <Navbar />
+      {!isBookletActive && <Navbar />}
 
       {/* 2. Hero Section - With stacked overlapping mockups (Mimicking Screenshot 1) */}
       <Hero 

@@ -1,5 +1,5 @@
 import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google';
-import { FloatingCalculatorButton } from '@/components/FloatingCalculatorButton';
+// import { FloatingCalculatorButton } from '@/components/FloatingCalculatorButton';
 import "./globals.css";
 
 const inter = Inter({
@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${playfair.variable} ${jetbrainsMono.variable}`}>
       <body suppressHydrationWarning className="font-sans antialiased text-slate-900 bg-white">
         {children}
-        <FloatingCalculatorButton />
+        {/* <FloatingCalculatorButton /> */}
       </body>
     </html>
   )
