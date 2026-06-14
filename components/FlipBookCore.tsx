@@ -205,7 +205,7 @@ export function FlipBookCore({ onClose }: { onClose?: () => void }) {
       </div>
 
       <div 
-         className="w-[65vw] sm:w-[65vw] max-w-[825px] h-[55vh] sm:h-[60vh] max-h-[560px] flex justify-center items-center perspective-[2000px] relative z-[80] my-auto"
+         className="w-[90vw] md:w-[65vw] max-w-[825px] h-[65vh] md:h-[60vh] max-h-[560px] flex justify-center items-center perspective-[2000px] relative z-[80] my-auto"
       >
         <HTMLFlipBook 
           ref={bookRef}
@@ -220,6 +220,7 @@ export function FlipBookCore({ onClose }: { onClose?: () => void }) {
           showCover={true}
           mobileScrollSupport={true}
           useMouseEvents={false}
+          usePortrait={true}
           flippingTime={800}
           className="flip-book shadow-2xl"
         >
