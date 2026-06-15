@@ -58,12 +58,22 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
 
     // Detect horizontal swipe
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40 && dt < 500) {
+      const flip = bookRef.current.pageFlip();
+      
       if (dx < 0) {
-        // swipe left -> next page
-        bookRef.current.pageFlip().flipNext();
+        // swipe left (scroll left) -> previous page
+        if (flip.getCurrentPageIndex() === 0) {
+          if (onClose) onClose();
+        } else {
+          flip.flipPrev();
+        }
       } else {
-        // swipe right -> prev page
-        bookRef.current.pageFlip().flipPrev();
+        // swipe right -> next page
+        if (flip.getCurrentPageIndex() >= flip.getPageCount() - 1) {
+          if (onClose) onClose();
+        } else {
+          flip.flipNext();
+        }
       }
     }
     
