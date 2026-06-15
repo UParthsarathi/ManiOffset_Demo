@@ -61,18 +61,18 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
       const flip = bookRef.current.pageFlip();
       
       if (dx < 0) {
-        // swipe left (scroll left) -> previous page
-        if (flip.getCurrentPageIndex() === 0) {
-          if (onClose) onClose();
-        } else {
-          flip.flipPrev();
-        }
-      } else {
-        // swipe right -> next page
+        // swipe left -> next page
         if (flip.getCurrentPageIndex() >= flip.getPageCount() - 1) {
           if (onClose) onClose();
         } else {
           flip.flipNext();
+        }
+      } else {
+        // swipe right -> previous page
+        if (flip.getCurrentPageIndex() === 0) {
+          if (onClose) onClose();
+        } else {
+          flip.flipPrev();
         }
       }
     }
