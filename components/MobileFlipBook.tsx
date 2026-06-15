@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import { useEffect, useState, useRef, forwardRef } from "react";
+import { useEffect, useState, useRef, forwardRef, useMemo } from "react";
 import HTMLFlipBook from "react-pageflip";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -32,14 +32,16 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
     router.push(`/product/${id}`);
   };
 
-  // Filter out empty categories
-  const validCategories = allCategories
-    .filter(c => c.name !== "All Products")
-    .map(c => ({
-      ...c,
-      items: products.filter(p => p.category === c.name)
-    }))
-    .filter(c => c.items.length > 0);
+  // Filter out empty categories, memoized for performance
+  const validCategories = useMemo(() => {
+    return allCategories
+      .filter(c => c.name !== "All Products")
+      .map(c => ({
+        ...c,
+        items: products.filter(p => p.category === c.name)
+      }))
+      .filter(c => c.items.length > 0);
+  }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartRef.current = {
@@ -53,26 +55,21 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
     if (!touchStartRef.current || !bookRef.current) return;
     
     const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
-    const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
-    const dt = Date.now() - touchStartRef.current.time;
-
-    // Detect horizontal swipe
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40 && dt < 500) {
+    
+    // Auto-close logic on boundaries when swiping past the ends
+    if (Math.abs(dx) > 60) {
       const flip = bookRef.current.pageFlip();
-      
-      if (dx < 0) {
-        // swipe left -> next page
-        if (flip.getCurrentPageIndex() >= flip.getPageCount() - 1) {
+      if (flip) {
+        const currentIndex = flip.getCurrentPageIndex();
+        const pageCount = flip.getPageCount();
+
+        // Swipe left (next) on the very last page
+        if (dx < 0 && currentIndex >= pageCount - 1) {
           if (onClose) onClose();
-        } else {
-          flip.flipNext();
         }
-      } else {
-        // swipe right -> previous page
-        if (flip.getCurrentPageIndex() === 0) {
+        // Swipe right (prev) on the very first page
+        if (dx > 0 && currentIndex === 0) {
           if (onClose) onClose();
-        } else {
-          flip.flipPrev();
         }
       }
     }
@@ -121,11 +118,11 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
           maxHeight={750}
           maxShadowOpacity={0.8}
           showCover={true}
-          mobileScrollSupport={false} // completely disable internal swiping to avoid conflicts
-          useMouseEvents={false} // completely disable internal pointer processing
+          mobileScrollSupport={true} // natively stop flips on vertical scroll
+          useMouseEvents={true} // enable native swipe calculations
           usePortrait={true}
           flippingTime={700}
-          disableFlipByClick={true}
+          disableFlipByClick={true} // still disabled to avoid accidental taps turning
           className="flip-book shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
         >
           {/* Cover Page */}
@@ -134,7 +131,7 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#050608] via-[#0b0d14] to-[#121622]" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#d4af37]/20 via-transparent to-transparent opacity-80" />
                 <div className="absolute top-0 bottom-0 left-0 w-[12px] bg-gradient-to-r from-black/80 via-black/30 to-transparent pointer-events-none z-20" />
-                <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%22 height=%22100%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
+                {/* Replaced heavy SVG turbulence with a lightweight static background or removed it to prevent animation lag */}
                 
                 {/* Book Cover Frame */}
                 <div className="absolute inset-[10px] border border-[#d4af37]/20 rounded-sm z-10 pointer-events-none" />
@@ -166,12 +163,10 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
             <Page key={category.name}>
               <div className="w-full h-full bg-[#0b0d14] relative overflow-hidden flex flex-col border-y border-r border-[#d4af37]/10">
                 <div className="absolute top-0 bottom-0 left-0 w-[16px] bg-gradient-to-r from-black/80 via-black/10 to-transparent pointer-events-none z-30" />
-                {/* Subtle Background Art */}
-                <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%22 height=%22100%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
-                <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#d4af37]/5 blur-[60px]" />
+                <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#d4af37]/5 blur-[60px] " />
                 
                 {/* Page Header */}
-                <div className="relative z-20 pt-6 px-6 pb-3 border-b border-white/5 shrink-0 bg-[#0b0d14]/80 backdrop-blur pl-8">
+                <div className="relative z-20 pt-6 px-6 pb-3 border-b border-white/5 shrink-0 bg-[#0b0d14]/95 pl-8">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-[#d4af37] font-sans text-[8px] uppercase tracking-[0.25em] font-semibold">
                       {String(catIdx + 1).padStart(2, '0')} {"// CATEGORY"}
@@ -184,12 +179,43 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div 
                    className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 pb-12 relative z-20 space-y-4 pl-8" 
                    style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+                   onTouchStart={(e) => {
+                     e.currentTarget.setAttribute('data-touch-x', e.touches[0].clientX.toString());
+                     e.currentTarget.setAttribute('data-touch-y', e.touches[0].clientY.toString());
+                     e.currentTarget.setAttribute('data-is-scrolling', 'unknown');
+                   }}
+                   onTouchMove={(e) => {
+                     let isScrolling = e.currentTarget.getAttribute('data-is-scrolling');
+                     
+                     if (isScrolling === 'unknown') {
+                       const startX = parseFloat(e.currentTarget.getAttribute('data-touch-x') || '0');
+                       const startY = parseFloat(e.currentTarget.getAttribute('data-touch-y') || '0');
+                       const dx = Math.abs(e.touches[0].clientX - startX);
+                       const dy = Math.abs(e.touches[0].clientY - startY);
+                       
+                       if (dx > 5 || dy > 5) {
+                         if (dy > dx) {
+                           e.currentTarget.setAttribute('data-is-scrolling', 'yes');
+                           isScrolling = 'yes';
+                         } else {
+                           e.currentTarget.setAttribute('data-is-scrolling', 'no');
+                           isScrolling = 'no';
+                         }
+                       }
+                     }
+                     
+                     // If we confirmed vertical scroll, stop propagation so pageflip doesn't grab it
+                     if (isScrolling === 'yes') {
+                       e.stopPropagation();
+                     }
+                   }}
                 >
                   {category.items.map((item, idx) => (
                     <div 
                       key={item.id}
                       onClick={(e) => { e.stopPropagation(); handleItemClick(item.id); }}
-                      className="group flex flex-row items-center gap-3 bg-white/[0.03] border border-white/5 rounded-xl p-2 sm:p-3 overflow-hidden active:scale-[0.98] transition-transform duration-200 cursor-pointer shadow-lg backdrop-blur-sm relative"
+                      className="group flex flex-row items-center gap-3 bg-[#131622] border border-white/5 rounded-xl p-2 sm:p-3 overflow-hidden active:scale-[0.98] transition-transform duration-200 cursor-pointer shadow-md relative"
+                      style={{ willChange: "transform" }}
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37]/5 opacity-0 active:opacity-100 transition-opacity" />
                       <div className="w-[70px] h-[90px] sm:w-[80px] sm:h-[100px] relative rounded-lg overflow-hidden shrink-0 bg-[#020513] border border-white/5">
