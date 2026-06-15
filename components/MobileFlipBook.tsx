@@ -55,21 +55,30 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
     if (!touchStartRef.current || !bookRef.current) return;
     
     const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
-    
-    // Auto-close logic on boundaries when swiping past the ends
-    if (Math.abs(dx) > 60) {
+    const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+    const dt = Date.now() - touchStartRef.current.time;
+
+    // Detect horizontal swipe (must be mostly horizontal, fast enough, and past threshold)
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40 && dt < 600) {
       const flip = bookRef.current.pageFlip();
       if (flip) {
         const currentIndex = flip.getCurrentPageIndex();
         const pageCount = flip.getPageCount();
 
-        // Swipe left (next) on the very last page
-        if (dx < 0 && currentIndex >= pageCount - 1) {
-          if (onClose) onClose();
-        }
-        // Swipe right (prev) on the very first page
-        if (dx > 0 && currentIndex === 0) {
-          if (onClose) onClose();
+        if (dx < 0) {
+          // Swipe left -> Next Page
+          if (currentIndex >= pageCount - 1) {
+            if (onClose) onClose();
+          } else {
+            flip.flipNext();
+          }
+        } else {
+          // Swipe right -> Previous Page 
+          if (currentIndex <= 0) {
+            if (onClose) onClose();
+          } else {
+            flip.flipPrev();
+          }
         }
       }
     }
@@ -118,8 +127,8 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
           maxHeight={750}
           maxShadowOpacity={0.8}
           showCover={true}
-          mobileScrollSupport={true} // natively stop flips on vertical scroll
-          useMouseEvents={true} // enable native swipe calculations
+          mobileScrollSupport={false} 
+          useMouseEvents={false} 
           usePortrait={true}
           flippingTime={700}
           disableFlipByClick={true} // still disabled to avoid accidental taps turning
