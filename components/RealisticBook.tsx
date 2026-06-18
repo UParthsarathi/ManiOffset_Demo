@@ -69,13 +69,13 @@ export function RealisticBook({
           className="absolute top-0 left-0 h-full origin-left bg-[#111] overflow-hidden flex flex-col justify-center items-center py-8 z-10 border-l border-white/10"
           style={{ 
             width: `${thickness}px`, 
-            transform: 'rotateY(-90deg)' 
+            transform: `translateZ(-${thickness}px) rotateY(-90deg)` 
           }}
         >
           {/* Spine texture/lighting to make it look rounded */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-white/10 to-black/90 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)]" />
           
-          <span className="text-white/80 font-serif text-[10px] md:text-[12px] tracking-[0.2em] font-medium uppercase shrink-0 whitespace-nowrap rotate-[-90deg]" style={{ transformOrigin: 'center' }}>
+          <span className="text-white/80 font-serif text-[10px] md:text-[12px] tracking-[0.2em] font-medium uppercase shrink-0 whitespace-nowrap rotate-[180deg] style-[writing-mode:vertical-rl]" style={{ transformOrigin: 'center' }}>
             {title}
           </span>
         </div>
@@ -85,7 +85,7 @@ export function RealisticBook({
           className="absolute top-[2px] right-[2px] bottom-[2px] origin-right bg-[#e8e8e8] flex rounded-r-[2px] overflow-hidden border-y border-r border-[#d0d0d0]"
           style={{ 
             width: `${thickness - 2}px`, 
-            transform: 'translateZ(-1px) rotateY(90deg)'
+            transform: `translateZ(-${thickness - 1}px) rotateY(90deg)`
           }}
         >
           {/* Simulate paper pages layer */}
@@ -105,7 +105,7 @@ export function RealisticBook({
           className="absolute top-[2px] left-[2px] right-[2px] origin-top bg-[#e8e8e8] flex overflow-hidden border-x border-[#d0d0d0] z-0 rounded-t-[1px]"
           style={{ 
             height: `${thickness - 2}px`, 
-            transform: 'translateZ(-1px) rotateX(-90deg)'
+            transform: `translateZ(-${thickness - 1}px) rotateX(90deg)`
           }}
         >
           <div className="w-full h-full opacity-40 flex justify-between px-[2px]">
@@ -121,7 +121,7 @@ export function RealisticBook({
           className="absolute bottom-[2px] left-[2px] right-[2px] origin-bottom bg-[#e8e8e8] flex overflow-hidden border-x border-[#d0d0d0] z-0 rounded-b-[1px]"
           style={{ 
             height: `${thickness - 2}px`, 
-            transform: 'translateZ(-1px) rotateX(90deg)'
+            transform: `translateZ(-${thickness - 1}px) rotateX(-90deg)`
           }}
         >
           <div className="w-full h-full opacity-40 flex justify-between px-[2px]">
