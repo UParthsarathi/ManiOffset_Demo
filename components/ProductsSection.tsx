@@ -59,8 +59,8 @@ export function ProductsSection() {
           </motion.p>
         </div>
 
-        {/* Category Filters - Wrap Layout for better UX (No Scrollbar) */}
-        <div className="w-full relative py-2">
+        {/* Category Filters - Wrapping Chip Cloud */}
+        <div className="w-full relative py-2 sm:mb-0">
           <div className="flex flex-wrap w-full justify-center gap-2 sm:gap-3 pb-4">
             {CATEGORIES.map((category) => {
               const isActive = activeCategory === category;
@@ -68,7 +68,7 @@ export function ProductsSection() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`relative px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-mono text-[9px] sm:text-[10px] md:text-xs tracking-widest uppercase whitespace-nowrap transition-colors duration-300 ${
+                  className={`relative px-4 sm:px-5 py-2.5 rounded-full font-mono text-[10px] sm:text-[10px] md:text-xs tracking-widest uppercase whitespace-nowrap transition-colors duration-300 ${
                     isActive
                       ? "text-white"
                       : "text-slate-500 hover:text-slate-800 bg-white border border-slate-200 hover:border-slate-300 shadow-sm"
@@ -89,25 +89,25 @@ export function ProductsSection() {
         </div>
 
         {/* Sub-bar: Showing results & Search */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 border-b border-slate-200/60 pb-6">
-          <div className="uppercase font-mono text-xs tracking-widest text-slate-400">
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4 sm:gap-6 border-b border-slate-200/60 pb-4 sm:pb-6 mt-2">
+          <div className="uppercase font-mono text-[10px] sm:text-xs tracking-widest text-slate-400 w-full text-center sm:text-left">
             Showing <span className="text-slate-900 font-bold">{filteredProducts.length}</span> Products
           </div>
           
           <div className="relative w-full sm:w-[320px]">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] text-slate-400" />
             <input 
               type="text" 
               placeholder="Search specifications, paper types..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-full text-sm outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 transition-all bg-white font-sans text-slate-700 shadow-sm"
+              className="w-full pl-10 sm:pl-11 pr-4 py-2.5 sm:py-3 border border-slate-200 rounded-full text-sm outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 transition-all bg-white font-sans text-slate-700 shadow-sm appearance-none"
             />
           </div>
         </div>
 
         {/* Product Grid - Approach 1: High Density Scannable Layout */}
-        <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-8">
+        <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 sm:gap-x-4 sm:gap-y-8 pt-4 sm:pt-2">
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product) => (
               <motion.div 
@@ -120,7 +120,7 @@ export function ProductsSection() {
               >
                 <div onClick={() => window.location.href = `/product/${product.id}`} className="group cursor-pointer flex flex-col h-full">
                   {/* Image Container - Square for density */}
-                  <div className="relative aspect-square w-full overflow-hidden bg-slate-100 rounded-lg mb-3 shadow-sm border border-slate-100/50">
+                  <div className="relative aspect-[4/3] sm:aspect-square w-full overflow-hidden bg-slate-100 rounded-lg mb-3 shadow-sm border border-slate-100/50">
                     <Image
                       src={product.imageUrl}
                       alt={product.title}
@@ -133,8 +133,8 @@ export function ProductsSection() {
                   </div>
 
                   {/* Content - Tight Spacing */}
-                  <div className="flex flex-col text-left px-1">
-                    <p className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400 uppercase mb-0.5 truncate">
+                  <div className="flex flex-col text-left px-0.5 sm:px-1">
+                    <p className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400 uppercase mb-1 sm:mb-0.5 truncate">
                       {product.categoryLabel}
                     </p>
                     <h4 className="font-serif font-bold text-sm sm:text-base text-slate-900 tracking-tight leading-snug group-hover:text-amber-600 transition-colors duration-200 line-clamp-2">
