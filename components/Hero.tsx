@@ -125,48 +125,29 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
         </div>
 
         {/* Right Hand Column: 3D Books Showcase */}
-        <div className="lg:col-span-5 flex justify-center items-center relative py-12 md:py-6 h-[400px] md:h-[500px]">
+        <div className="lg:col-span-5 flex justify-center items-center relative py-12 md:py-6 h-[400px] md:h-[500px] xl:h-[600px]">
           {/* Books Container */}
-          <div className="relative w-full max-w-[500px] h-full flex items-center justify-center -ml-10 md:-ml-0">
-            {slides.map((slide, index) => {
-              // Calculate stacked positioning
-              // index 0: bottom, left-most
-              // index 1: middle
-              // index 2: top, right-most
-              const zIndex = index * 10;
-              const leftOffset = index * 60 - 60; // -60px, 0px, +60px
-              const topOffset = index * 20 - 20; // -20px, 0px, +20px
-              const rotation = index === 0 ? '-rotate-12' : index === 1 ? '-rotate-3' : 'rotate-6';
-              const delay = `delay-[${index * 150}ms]`;
-              
-              return (
-                <div 
-                  key={slide.id}
-                  className="absolute"
-                  style={{
-                    zIndex,
-                    transform: `translate(${leftOffset}px, ${topOffset}px)`
-                  }}
-                >
-                  <RealisticBook
-                    title={slide.title}
-                    image={slide.image}
-                    tag={slide.tag}
-                    theme={slide.theme}
-                    rotation={rotation}
-                    delay={delay}
-                    onClick={onLaunchBooklet}
-                    thickness={slide.id === 3 ? 12 : slide.id === 2 ? 18 : 32} // Different thickness
-                  />
-                </div>
-              );
-            })}
+          <div className="relative w-full max-w-[500px] h-full flex items-center justify-center">
+            <div 
+              className="absolute scale-100 sm:scale-110 md:scale-125 lg:scale-[1.15] xl:scale-[1.3] origin-center transition-transform duration-1000 ease-out"
+            >
+              <RealisticBook
+                title="Dune"
+                image="https://covers.openlibrary.org/b/isbn/9780441172719-L.jpg"
+                tag="ARRAKIS EDITION"
+                theme="border-orange-500/40 text-orange-500"
+                rotation=""
+                delay=""
+                onClick={onLaunchBooklet}
+                thickness={36}
+              />
+            </div>
           </div>
 
           {/* Holographic Play Interactive Badge positioned floating in foreground */}
           <div 
             onClick={onLaunchBooklet}
-            className="absolute bottom-4 md:bottom-12 right-[5%] bg-[#f29a1b] text-white font-mono text-[10px] md:text-xs font-bold px-4 py-2.5 rounded-full shadow-2xl border border-[#ffb142] flex items-center gap-2 cursor-pointer animate-bounce z-50 hover:bg-[#ffb142] transition-colors"
+            className="absolute bottom-4 md:bottom-12 right-[5%] bg-[#f29a1b] text-white font-mono text-[10px] md:text-xs font-bold px-5 py-3 rounded-full shadow-2xl border border-[#ffb142] flex items-center gap-2 cursor-pointer animate-bounce z-50 hover:bg-[#ffb142] transition-colors"
           >
             <Sparkles className="w-4 h-4 text-white" />
             <span>OPEN 3D SHOWROOM</span>

@@ -52,7 +52,7 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStartRef.current || !bookRef.current) return;
+    if (!touchStartRef.current || !bookRef.current || e.changedTouches.length === 0) return;
     
     const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
     const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
@@ -62,6 +62,13 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40 && dt < 600) {
       const flip = bookRef.current.pageFlip();
       if (flip) {
+        try {
+          if (flip.getState() === 'flipping') {
+            touchStartRef.current = null;
+            return;
+          }
+        } catch (e) {}
+
         const currentIndex = flip.getCurrentPageIndex();
         const pageCount = flip.getPageCount();
 
@@ -147,21 +154,21 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div className="absolute inset-[14px] border border-[#d4af37]/10 rounded-sm z-10 pointer-events-none" />
                 
                 <div className="p-8 h-full flex flex-col justify-center relative z-20 text-white font-serif text-center">
-                  <div className="flex flex-col items-center mb-8">
-                    <div className="w-8 h-[1px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mb-4" />
-                    <div className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-[#d4af37]">Catalogue</div>
+                  <div className="flex flex-col items-center mb-10">
+                    <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mb-6" />
+                    <div className="text-[12px] uppercase tracking-[0.4em] font-sans font-bold text-[#d4af37]">Catalogue</div>
                   </div>
-                  <div className="text-3xl font-medium leading-[1.1] tracking-tight mb-8 text-white relative">
+                  <div className="text-4xl sm:text-5xl font-medium leading-[1.15] tracking-tight mb-8 text-white relative">
                     The Product<br/>Showroom
                   </div>
-                  <p className="text-white/50 font-sans text-[8px] font-medium uppercase tracking-[0.2em] leading-relaxed mt-4 mx-auto max-w-[80%]">
+                  <p className="text-white/50 font-sans text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] leading-relaxed mt-6 mx-auto max-w-[85%]">
                     Flip pages to explore bespoke collections.
                   </p>
                   
-                  <div className="mt-16 flex items-center justify-center gap-4">
-                    <div className="text-[8px] font-sans text-white/40 font-semibold uppercase tracking-[0.3em]">Est. 1995</div>
-                    <div className="w-1 h-1 rounded-full bg-[#d4af37]/50" />
-                    <div className="text-[8px] font-sans text-white/40 font-semibold uppercase tracking-[0.3em]">Edition 04</div>
+                  <div className="mt-20 flex items-center justify-center gap-4">
+                    <div className="text-[10px] font-sans text-white/40 font-semibold uppercase tracking-[0.3em]">Est. 1995</div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#d4af37]/50" />
+                    <div className="text-[10px] font-sans text-white/40 font-semibold uppercase tracking-[0.3em]">Edition 04</div>
                   </div>
                 </div>
              </div>
@@ -175,13 +182,13 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-[#d4af37]/5 blur-[60px] " />
                 
                 {/* Page Header */}
-                <div className="relative z-20 pt-6 px-6 pb-3 border-b border-white/5 shrink-0 bg-[#0b0d14]/95 pl-8">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[#d4af37] font-sans text-[8px] uppercase tracking-[0.25em] font-semibold">
+                <div className="relative z-20 pt-8 px-6 pb-4 border-b border-white/5 shrink-0 bg-[#0b0d14]/95 pl-8">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-[#d4af37] font-sans text-[10px] uppercase tracking-[0.25em] font-semibold">
                       {String(catIdx + 1).padStart(2, '0')} {"// CATEGORY"}
                     </span>
                   </div>
-                  <h2 className="text-white font-serif text-lg sm:text-xl leading-tight opacity-90 truncate pr-2">{category.name}</h2>
+                  <h2 className="text-white font-serif text-2xl sm:text-3xl leading-tight opacity-90 truncate pr-2">{category.name}</h2>
                 </div>
 
                 {/* Scrollable Content inside the flip page */}
@@ -236,30 +243,30 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                            className="object-cover"
                          />
                       </div>
-                      <div className="flex flex-col flex-1 py-1 h-full justify-center pr-1 relative z-10">
-                        <span className="text-white/40 text-[7px] font-bold font-sans uppercase tracking-[0.2em] mb-1">
+                      <div className="flex flex-col flex-1 py-1 h-full justify-center pr-1 relative z-10 transition-colors">
+                        <span className="text-white/60 text-[9px] font-bold font-sans uppercase tracking-[0.2em] mb-1.5 transition-colors group-active:text-[#d4af37]/80">
                           Item {String(idx + 1).padStart(2, '0')}
                         </span>
-                        <h3 className="text-white font-serif text-[12px] sm:text-[13px] leading-tight mb-1.5 opacity-90 line-clamp-2">
+                        <h3 className="text-white font-serif text-[15px] sm:text-[16px] leading-tight mb-2 opacity-100 line-clamp-2 transition-colors group-active:text-[#d4af37]">
                           {item.title}
                         </h3>
-                        <div className="mt-auto flex items-center gap-2 opacity-80 group-active:opacity-100">
-                           <div className="w-2 h-[1px] bg-[#d4af37]" />
-                           <span className="text-[#d4af37] text-[7px] uppercase tracking-[0.2em] font-bold">Details</span>
+                        <div className="mt-auto flex items-center gap-2 opacity-80 group-active:opacity-100 transition-opacity">
+                           <div className="w-3 h-[1px] bg-[#d4af37]" />
+                           <span className="text-[#d4af37] text-[9px] uppercase tracking-[0.2em] font-bold">Details</span>
                         </div>
                       </div>
                     </div>
                   ))}
                   
                   {/* Space at the bottom of inner scroll to ensure all content is reachable */}
-                  <div className="h-4 w-full text-center opacity-30 mt-6 mb-4">
-                     <span className="text-[8px] text-[#d4af37] font-serif italic text-center w-full block">End of Category</span>
+                  <div className="h-4 w-full text-center opacity-30 mt-8 mb-6">
+                     <span className="text-[10px] text-[#d4af37] font-serif italic text-center w-full block">End of Category</span>
                   </div>
                 </div>
                 
                 {/* Page Number indicator inside flipbook */}
-                <div className="absolute bottom-3 right-4 z-20 opacity-40">
-                   <span className="font-sans text-[8px] font-bold text-[#d4af37]">{catIdx + 1}</span>
+                <div className="absolute bottom-4 right-5 z-20 opacity-40">
+                   <span className="font-sans text-[10px] font-bold text-[#d4af37]">{catIdx + 1}</span>
                 </div>
               </div>
             </Page>
@@ -275,11 +282,11 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                 <div className="absolute inset-[10px] border border-[#d4af37]/10 rounded-sm z-10 pointer-events-none" />
                 
                 <div className="relative z-20 flex flex-col items-center pl-4">
-                    <div className="w-6 h-[1px] bg-[#d4af37]/40 mb-6" />
-                    <span className="font-serif text-white/50 text-[18px] tracking-wide mb-2 opacity-80 mix-blend-plus-lighter">feeltheprint.</span>
-                    <div className="flex flex-col items-center gap-2 mt-4">
-                       <span className="text-[#d4af37]/60 text-[7px] uppercase tracking-[0.4em] font-sans font-bold">Studio Edition {"//"} 04</span>
-                       <span className="text-white/30 text-[7px] uppercase tracking-[0.3em] font-sans mt-2">Crafted with precision</span>
+                    <div className="w-8 h-[1px] bg-[#d4af37]/40 mb-8" />
+                    <span className="font-serif text-white/50 text-[24px] tracking-wide mb-3 opacity-80 mix-blend-plus-lighter">feeltheprint.</span>
+                    <div className="flex flex-col items-center gap-3 mt-6">
+                       <span className="text-[#d4af37]/60 text-[9px] uppercase tracking-[0.4em] font-sans font-bold">Studio Edition {"//"} 04</span>
+                       <span className="text-white/30 text-[9px] uppercase tracking-[0.3em] font-sans mt-2">Crafted with precision</span>
                     </div>
                 </div>
             </div>

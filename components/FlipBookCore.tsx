@@ -200,7 +200,7 @@ export function FlipBookCore({ onClose }: { onClose?: () => void }) {
       
       <div className="fixed bottom-8 flex justify-center w-full z-50 pointer-events-none">
         <span className="text-white/60 text-[10px] sm:text-xs font-bold uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur border border-white/5">
-            Drag or click corners to flip
+            Swipe up and down to turn pages
         </span>
       </div>
 
