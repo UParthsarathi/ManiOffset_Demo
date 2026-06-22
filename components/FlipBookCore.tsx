@@ -52,10 +52,10 @@ const CategoryList = ({ category, selectedItem, onSelect, onItemClick, subtitle,
                        }}
                        className={`group flex items-center w-full py-1.5 sm:py-2.5 border-b ${isDark ? 'border-white/10' : 'border-black/10'} pointer-events-auto transition-all duration-500 cursor-pointer ${idx === 0 ? 'border-t' : ''}`}
                      >
-                        <span className={`text-[8px] sm:text-[9px] md:text-[10px] font-sans font-bold tracking-[0.15em] transition-all duration-500 w-6 sm:w-8 ${selectedItem?.id === item.id ? (isDark ? 'text-[#d4af37] opacity-100' : 'text-[#9c7c38] opacity-100') : (isDark ? 'text-white/30 group-hover:text-white/70' : 'text-black/30 group-hover:text-black/70')}`}>
+                        <span className={`text-[8px] sm:text-[9px] md:text-[10px] font-sans font-bold tracking-[0.15em] transition-all duration-500 w-6 sm:w-8 ${selectedItem?.id === item.id ? (isDark ? 'text-[#d4af37] opacity-100' : 'text-[#9c7c38] opacity-100') : (isDark ? 'text-white/60 group-hover:text-[#d4af37]/80' : 'text-black/60 group-hover:text-[#d4af37]/80')}`}>
                           {(idx + 1).toString().padStart(2, '0')}
                         </span>
-                        <span className={`text-[10px] sm:text-[11px] md:text-[12px] font-serif transition-all duration-500 flex-1 pl-1 sm:pl-2 ${selectedItem?.id === item.id ? (isDark ? 'text-white transform translate-x-1 sm:translate-x-2' : 'text-[#0a0a0a] transform translate-x-1 sm:translate-x-2 font-medium') : (isDark ? 'text-white/50 group-hover:text-white group-hover:translate-x-1' : 'text-black/50 group-hover:text-black group-hover:translate-x-1')}`}>
+                        <span className={`text-[12px] sm:text-[14px] md:text-[16px] font-serif transition-colors duration-300 flex-1 pl-1 sm:pl-2 ${selectedItem?.id === item.id ? (isDark ? 'text-[#d4af37] transform translate-x-1 sm:translate-x-2' : 'text-[#d4af37] transform translate-x-1 sm:translate-x-2 font-medium') : (isDark ? 'text-white group-hover:text-[#d4af37]/90 group-hover:translate-x-1' : 'text-black group-hover:text-[#d4af37]/90 group-hover:translate-x-1')}`}>
                           {item.title}
                         </span>
                         
