@@ -76,7 +76,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   Available for Production
                 </span>
                 <span className="text-slate-300">|</span>
-                <span className="hover:text-amber-600 hover:underline transition-colors cursor-pointer text-slate-500">Request Custom Quote</span>
+                <Link href="/calculator" className="hover:text-amber-600 hover:underline transition-colors cursor-pointer text-slate-500">Request Custom Quote</Link>
             </div>
           </div>
 

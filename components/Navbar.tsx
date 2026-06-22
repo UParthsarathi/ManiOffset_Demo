@@ -95,8 +95,7 @@ export function Navbar() {
   };
 
     const handleScrollToConfigurator = () => {
-      // Navigate to products page instead of scrolling
-      router.push("/products");
+      router.push("/calculator");
     };
 
   return (

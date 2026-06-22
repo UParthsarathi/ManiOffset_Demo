@@ -3,16 +3,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { Book, Mail, MapPin, PhoneCall, ArrowUp } from "lucide-react";
 
+  import { useRouter } from "next/navigation";
+
 export function Footer() {
+  const router = useRouter();
+
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleScrollToCalculator = () => {
-    const configSec = document.getElementById("configurator-section");
-    if (configSec) {
-      configSec.scrollIntoView({ behavior: "smooth" });
-    }
+    router.push("/calculator");
   };
 
   return (

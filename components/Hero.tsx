@@ -1,5 +1,6 @@
 "use client";
-import { BookOpen, Sparkles, Sliders, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { BookOpen, Sparkles, Sliders, ChevronRight, Calculator } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -11,6 +12,7 @@ interface HeroProps {
 }
 
 export function Hero({ onLaunchBooklet }: HeroProps) {
+  const router = useRouter();
   const slides = [
     {
       id: 1,
@@ -95,13 +97,13 @@ export function Hero({ onLaunchBooklet }: HeroProps) {
               <span>Browse Print Catalog</span>
               <ChevronRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
             </a>
-            {/* 3D Booklet Button */}
+            {/* Calculator Button */}
             <button
-              onClick={onLaunchBooklet}
+              onClick={() => router.push('/calculator')}
               className="px-8 py-4 bg-transparent border border-[#f29a1b]/30 hover:border-[#f29a1b]/60 hover:bg-[#f29a1b]/5 text-[#f29a1b] text-xs sm:text-sm font-bold uppercase tracking-wider rounded-lg transition-all text-center flex items-center justify-center gap-2 cursor-pointer group"
             >
-              <BookOpen className="w-4 h-4" />
-              <span>Launch 3D Booklet</span>
+              <Calculator className="w-4 h-4" />
+              <span>Get Custom Quote</span>
             </button>
           </div>
 
