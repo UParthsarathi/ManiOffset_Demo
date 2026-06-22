@@ -55,7 +55,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             {[...Array(4)].map((_, i) => (
               <div key={i} className={`relative aspect-square bg-white rounded-md overflow-hidden cursor-pointer border p-1 ${i === 0 ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-200 hover:border-amber-500'}`}>
                 <Image 
-                  src={`${product.imageUrl}?random=${i}`}
+                  src={`${product.imageUrl}${product.imageUrl.includes('?') ? '&' : '?'}random=${i}`}
                   alt={`${product.title} thumbnail`}
                   fill
                   className="object-contain"

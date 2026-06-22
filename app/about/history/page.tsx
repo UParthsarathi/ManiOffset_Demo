@@ -22,7 +22,7 @@ export default function HistoryPage() {
         </p>
 
         <div className="relative aspect-[21/9] rounded overflow-hidden shadow-sm border border-slate-200 mb-8 md:mb-10 lg:mb-12">
-          <Image src="https://picsum.photos/seed/printinghistory/1200/500" alt="Vintage Printing Press" fill className="object-cover" referrerPolicy="no-referrer" />
+          <Image src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1200" alt="Vintage Printing Press" fill className="object-cover" referrerPolicy="no-referrer" />
         </div>
 
         <h3 className="text-2xl font-bold text-[#20283c] mb-4 mt-8">The Early Years (1995 - 2005)</h3>

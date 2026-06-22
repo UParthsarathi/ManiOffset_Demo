@@ -100,7 +100,7 @@ const ImageDisplay = ({ item, subtitle, onItemClick, isDark = false, spine = "ri
              }}
            >
               <Image 
-                src={item.imageUrl || `https://picsum.photos/seed/${slugify(item.title)}/800/1000`}
+                src={item.imageUrl || `https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800`}
                 alt={item.title}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

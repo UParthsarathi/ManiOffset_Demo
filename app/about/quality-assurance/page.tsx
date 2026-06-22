@@ -22,7 +22,7 @@ export default function QualityAssurancePage() {
         </p>
 
         <div className="relative aspect-[21/9] rounded overflow-hidden shadow-sm border border-slate-200 mb-8 md:mb-10 lg:mb-12">
-          <Image src="https://picsum.photos/seed/printingqa/1200/500" alt="Quality Assurance Inspection" fill className="object-cover" referrerPolicy="no-referrer" />
+          <Image src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" alt="Quality Assurance Inspection" fill className="object-cover" referrerPolicy="no-referrer" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

@@ -49,7 +49,7 @@ export function About() {
           {/* Main factory/printing press image */}
           <div className="absolute inset-0 bg-slate-800">
             <Image
-              src="https://picsum.photos/seed/print1/800/800"
+              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
               alt="Offset Printing Press Facility"
               fill
               className="object-cover"

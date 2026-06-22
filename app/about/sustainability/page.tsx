@@ -22,7 +22,7 @@ export default function SustainabilityPage() {
         </p>
 
         <div className="relative aspect-video rounded overflow-hidden shadow-sm border border-slate-200 mb-8">
-          <Image src="https://picsum.photos/seed/printingsustainability/1000/600" alt="Sustainable Printing Practices" fill className="object-cover" referrerPolicy="no-referrer" />
+          <Image src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=1200" alt="Sustainable Printing Practices" fill className="object-cover" referrerPolicy="no-referrer" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">

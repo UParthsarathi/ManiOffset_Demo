@@ -236,7 +236,7 @@ export function MobileFlipBook({ onClose }: { onClose?: () => void }) {
                       <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37]/5 opacity-0 active:opacity-100 transition-opacity" />
                       <div className="w-[70px] h-[90px] sm:w-[80px] sm:h-[100px] relative rounded-lg overflow-hidden shrink-0 bg-[#020513] border border-white/5">
                          <Image 
-                           src={item.imageUrl || `https://picsum.photos/seed/${slugify(item.title)}/400/500`}
+                           src={item.imageUrl || `https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800`}
                            alt={item.title}
                            fill
                            sizes="(max-width: 768px) 80px, 120px"
