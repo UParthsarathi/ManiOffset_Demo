@@ -35,6 +35,7 @@ export function Footer() {
                   src="/logo.png" 
                   alt="FeelThe Print Logo" 
                   fill
+                  sizes="192px"
                   className="object-contain object-left" 
                 />
               </div>
@@ -51,7 +52,7 @@ export function Footer() {
           <div className="space-y-3 pt-2 text-xs md:text-sm text-slate-400">
             <div className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#f29a1b] shrink-0 mt-0.5" />
-              <span>Headquarters: Mani Offset Press, Junction Rd, Sivakasi / Chennai, Tamil Nadu, India.</span>
+              <span>Mani Offset, Kamaraj Salai, Sivakasi, Tamil Nadu 626123, India.</span>
             </div>
             <div className="flex items-center gap-2.5">
               <PhoneCall className="w-4 h-4 text-[#f29a1b] shrink-0" />

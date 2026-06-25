@@ -14,6 +14,7 @@ export function PressHeader({ title = "Printing Academy" }: { title?: string }) 
               src="/logo.png" 
               alt="FeelThe Print Logo" 
               fill
+              sizes="(max-width: 640px) 160px, 192px"
               className="object-contain object-left" 
               priority
             />

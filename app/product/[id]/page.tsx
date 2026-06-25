@@ -4,7 +4,32 @@ import { Footer } from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { products } from "@/lib/data";
-import { ArrowLeft, Check, Shield, Truck, ChevronRight } from "lucide-react";
+import { ArrowLeft, Check, Shield, Truck, ChevronRight, Feather, Tag, MessageCircle, Calculator } from "lucide-react";
+import StructuredData from "@/components/StructuredData";
+import { generateProductSchema } from "@/lib/seo";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const productId = parseInt(resolvedParams.id, 10);
+  const product = products.find((p) => p.id === productId);
+
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+    };
+  }
+
+  return {
+    title: product.title,
+    description: product.description,
+    openGraph: {
+      title: `${product.title} | Mani Offset`,
+      description: product.description,
+      images: [product.imageUrl],
+    },
+  };
+}
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -21,153 +46,265 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
+    <div className="min-h-screen flex flex-col bg-white font-sans selection:bg-amber-100 selection:text-amber-900">
+      <StructuredData data={generateProductSchema(product)} />
       <Navbar />
 
-      {/* Breadcrumb & Navigation */}
-      <div className="bg-white border-b border-slate-200 py-3 px-4 sm:px-6 lg:px-8 pt-20">
-        <div className="max-w-4xl mx-auto flex items-center text-[11px] font-medium text-slate-500">
-          <Link href="/products" className="hover:text-slate-900 transition-colors flex items-center gap-1.5 p-1 -ml-1 rounded-md hover:bg-slate-100">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Catalog
-          </Link>
-          <span className="mx-2.5 text-slate-300">/</span>
-          <span className="uppercase tracking-widest">{product.category}</span>
-          <span className="mx-2.5 text-slate-300">/</span>
+      {/* Clean Breadcrumb */}
+      <div className="bg-white pt-20 pb-4 px-4 sm:px-6 lg:px-8 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto flex items-center text-[10px] font-bold text-slate-400 tracking-widest uppercase">
+          <Link href="/products" className="hover:text-amber-600 transition-colors">Products</Link>
+          <span className="mx-2 font-normal text-slate-300">/</span>
+          <Link href={`/products?category=${encodeURIComponent(product.category)}`} className="hover:text-amber-600 transition-colors">{product.category}</Link>
+          <span className="mx-2 font-normal text-slate-300">/</span>
           <span className="text-slate-900">{product.title}</span>
         </div>
       </div>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
-        {/* Left: Product Image */}
-        <div className="w-full lg:w-4/12 flex flex-col shrink-0">
-          <div className="relative aspect-[4/3] w-full bg-white border border-slate-200 rounded-lg overflow-hidden flex items-center justify-center p-4">
-            <Image 
-              src={product.imageUrl}
-              alt={product.title}
-              fill
-              className="object-contain"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          
-          <div className="grid grid-cols-4 gap-3 mt-3">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className={`relative aspect-square bg-white rounded-md overflow-hidden cursor-pointer border p-1 ${i === 0 ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-200 hover:border-amber-500'}`}>
+      <main className="flex-1 w-full bg-white selection:bg-amber-100 selection:text-amber-900 pb-16">
+        
+        {/* 1. HERO - Hook & Story */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 border-b border-slate-100">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div className="flex flex-col order-2 lg:order-1">
+              <div className="inline-flex items-center gap-3 mb-6">
+                <span className="h-px w-8 bg-amber-500"></span>
+                <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">{product.categoryLabel}</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 leading-[1.1] mb-6">
+                Got a Story That Needs Printing?
+              </h1>
+              <div className="text-lg md:text-xl text-slate-500 font-light leading-relaxed mb-10 space-y-4">
+                <p>
+                  Our <strong className="text-slate-900 font-medium">{product.title.toLowerCase()}</strong> printing services turn your draft into a real, tangible product. 
+                </p>
+                <p>
+                  If you’ve been searching for a printing shop that delivers on time, you’ve found it. At FeelThePRINT, the process is simple and hassle-free:
+                </p>
+              </div>
+              
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 md:p-8 mb-10">
+                <div className="space-y-6">
+                  <div className="flex gap-4 items-start">
+                    <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
+                    <div>
+                      <h4 className="text-base font-bold text-slate-900">Choose your Size & Specs</h4>
+                      <p className="text-slate-500 text-sm mt-1">Select from our standard or custom dimensions and use our calculator to get an instant estimate.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
+                    <div>
+                      <h4 className="text-base font-bold text-slate-900">Consult & Send Artwork</h4>
+                      <p className="text-slate-500 text-sm mt-1">Connect with our prepress team directly via WhatsApp or email to finalize your design without clunky uploads.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</div>
+                    <div>
+                      <h4 className="text-base font-bold text-slate-900">Let us handle the rest</h4>
+                      <p className="text-slate-500 text-sm mt-1">Every copy is sharp and reliable, thanks to precise print-to-print consistency.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  href={`/calculator?product=${product.id}`}
+                  className="flex-1 inline-flex items-center justify-center px-6 py-4 bg-slate-900 hover:bg-slate-800 text-white text-xs md:text-sm uppercase tracking-widest font-bold rounded-lg shadow-xl hover:shadow-2xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 group"
+                >
+                  <Calculator className="w-4 h-4 mr-2" />
+                  Instant Quote
+                </Link>
+                <a 
+                  href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20printing%20a%20${encodeURIComponent(product.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center px-6 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs md:text-sm uppercase tracking-widest font-bold rounded-lg shadow-xl hover:shadow-2xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366]"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2 fill-current" />
+                  Chat on WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <div className="relative aspect-[4/5] w-full bg-[#f8f9fa] rounded-2xl overflow-hidden border border-slate-100 group">
                 <Image 
-                  src={`${product.imageUrl}${product.imageUrl.includes('?') ? '&' : '?'}random=${i}`}
-                  alt={`${product.title} thumbnail`}
+                  src={product.imageUrl}
+                  alt={product.title}
                   fill
-                  className="object-contain"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-contain p-8 lg:p-12 mix-blend-multiply group-hover:scale-105 transition-transform duration-1000 ease-out"
                   referrerPolicy="no-referrer"
                 />
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Middle: Product Details */}
-        <div className="w-full lg:w-5/12 flex flex-col space-y-4">
-          <div className="border-b border-slate-200 pb-4">
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-tight mb-2">{product.title}</h1>
-            <div className="flex items-center gap-2 text-sm text-slate-600">
-                <span className="text-slate-700 font-bold flex items-center">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
-                  Available for Production
-                </span>
-                <span className="text-slate-300">|</span>
-                <Link href="/calculator" className="hover:text-amber-600 hover:underline transition-colors cursor-pointer text-slate-500">Request Custom Quote</Link>
             </div>
           </div>
+        </section>
 
-          <div className="py-2">
-            <h3 className="font-bold text-base text-slate-900 mb-3">About this item</h3>
-            <ul className="list-disc pl-5 text-sm text-slate-800 space-y-2 mb-6">
-              <li><strong>Premium Printing:</strong> High-fidelity color reproduction tailored for commercial {product.categoryLabel.toLowerCase()} products.</li>
-              <li><strong>Customizable Configurations:</strong> Select precise quantity, paper stock, and dimensions in the order panel.</li>
-              <li><strong>Minimum Order Quantity:</strong> This product requires a minimum order of 500 units.</li>
-              <li><strong>Quality Assurance:</strong> Backed by our multi-point industrial inspection protocol.</li>
-            </ul>
-            <p className="text-sm text-slate-700 leading-relaxed">
-              {product.description} Utilize our world-class offset methodology to mass-produce your materials with unmatched reliability and cost-efficiency at scale.
+        {/* 2. DEFINITION & COVERS */}
+        <section className="bg-slate-900 text-white py-20 lg:py-32">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-6">What is {product.title}?</h2>
+              <p className="text-lg md:text-xl text-slate-400 font-light leading-relaxed">
+                {product.description} It’s a format our clients prefer because it’s:
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-20">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 text-amber-500">
+                  <Shield className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">Strong</h3>
+                <p className="text-sm text-slate-400">Holds up through many reads and extended usage.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 text-amber-500">
+                  <Check className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">Light</h3>
+                <p className="text-sm text-slate-400">Easy to carry anywhere, minimizing freight costs.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4 text-amber-500">
+                  <Truck className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">Affordable</h3>
+                <p className="text-sm text-slate-400">Budget friendly for every reader and mass distribution.</p>
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 pt-16">
+              <h2 className="text-2xl md:text-3xl font-medium mb-6 text-center">Covers & Finishes</h2>
+              <p className="text-slate-400 text-center max-w-2xl mx-auto mb-12">
+                Every production has its own personality — and the cover sets the tone. At FeelThePRINT, we offer styles that balance function and finish:
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
+                  <h4 className="text-lg font-bold text-amber-500 mb-3">Standard Wrapper</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">A simple, flexible wrapper that keeps the book light and comfortable to hold; ideal for novels, reports, and general reading copies.</p>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
+                  <h4 className="text-lg font-bold text-amber-500 mb-3">French Fold Cover</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">Made from heavier wrapper with extended flaps folded inside, giving a refined, durable edge often chosen for premium or limited editions.</p>
+                </div>
+              </div>
+              <p className="text-center text-sm text-slate-400 mt-8 italic">
+                Each cover type is printed on our offset plant for consistent texture, strong colour, and clean fold lines that make the product feel just right in hand.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. SIZE TABLE */}
+        <section className="py-20 lg:py-32 bg-[#fcfcfc] border-b border-slate-100">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-4">Standard Sizing Guide</h2>
+              <p className="text-slate-500">Find the perfect dimensions for your manuscript or layout.</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse bg-white shadow-sm rounded-xl overflow-hidden border border-slate-200">
+                <thead>
+                  <tr className="bg-slate-900 text-white">
+                    <th className="py-5 px-6 text-xs font-bold uppercase tracking-widest whitespace-nowrap">Category</th>
+                    <th className="py-5 px-6 text-xs font-bold uppercase tracking-widest whitespace-nowrap">Printing Size</th>
+                    <th className="py-5 px-6 text-xs font-bold uppercase tracking-widest whitespace-nowrap">Dimensions (Inches)</th>
+                    <th className="py-5 px-6 text-xs font-bold uppercase tracking-widest">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-slate-600 divide-y divide-slate-100">
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-medium text-slate-900 whitespace-nowrap">Standard Edition</td>
+                    <td className="py-5 px-6 whitespace-nowrap">1/8 Demy</td>
+                    <td className="py-5 px-6 font-mono whitespace-nowrap">5.5&quot; x 8.5&quot;</td>
+                    <td className="py-5 px-6">The most popular format used by publishers worldwide.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-medium text-slate-900 whitespace-nowrap">Global Standard</td>
+                    <td className="py-5 px-6 whitespace-nowrap">A5</td>
+                    <td className="py-5 px-6 font-mono whitespace-nowrap">5.8&quot; x 8.3&quot;</td>
+                    <td className="py-5 px-6">Perfect for international distribution, manuals, and journals.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-medium text-slate-900 whitespace-nowrap">Study & Reference</td>
+                    <td className="py-5 px-6 whitespace-nowrap">1/4 Demy</td>
+                    <td className="py-5 px-6 font-mono whitespace-nowrap">8.5&quot; x 11&quot;</td>
+                    <td className="py-5 px-6">Suitable for guides, handbooks, and academic material.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-medium text-slate-900 whitespace-nowrap">Visual & Manual</td>
+                    <td className="py-5 px-6 whitespace-nowrap">1/4 Crown</td>
+                    <td className="py-5 px-6 font-mono whitespace-nowrap">7&quot; x 9.5&quot;</td>
+                    <td className="py-5 px-6">Gives extra room for images, diagrams, or notes.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-medium text-slate-900 whitespace-nowrap">Compact Reads</td>
+                    <td className="py-5 px-6 whitespace-nowrap">1/8 Crown</td>
+                    <td className="py-5 px-6 font-mono whitespace-nowrap">4.75&quot; x 7&quot;</td>
+                    <td className="py-5 px-6">Small, travel-friendly size — perfect for novellas.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-medium text-slate-900 whitespace-nowrap">Custom</td>
+                    <td className="py-5 px-6 whitespace-nowrap">Variable</td>
+                    <td className="py-5 px-6 font-mono whitespace-nowrap">Flexible</td>
+                    <td className="py-5 px-6">Designed to fit your specific manuscript or layout preferences.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. VALUE PROP & CTA */}
+        <section className="py-20 lg:py-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-8">More Than Just a Printing Press</h2>
+          <div className="text-lg text-slate-600 leading-relaxed mb-12 space-y-6">
+            <p>
+              When people search for a printing press or online print services, they want more than just an offset printer — they want dependability. That’s what we provide.
             </p>
-            
-            <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700 mt-6 pt-6 border-t border-slate-200">
-              <div className="flex items-center gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-md">
-                <Check className="w-4 h-4 text-emerald-600" /> Pre-Flight Check included
-              </div>
-              <div className="flex items-center gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-md">
-                <Shield className="w-4 h-4 text-blue-600" /> ISO Certified Output
-              </div>
-              <div className="flex items-center gap-1.5 p-2 bg-slate-50 border border-slate-200 rounded-md">
-                <Truck className="w-4 h-4 text-amber-600" /> Nationwide Freight dispatch
-              </div>
+            <p>
+              With offset in printing, every page is consistent, maintaining the same sharpness and clarity throughout. <strong className="text-slate-900 font-bold">Pricing is straightforward</strong> and based on page count, order volume, and printing size. No hidden costs, just the best printing quality every time.
+            </p>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-100 rounded-3xl p-8 md:p-16">
+            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Bring Your Pages to Life</h3>
+            <p className="text-slate-600 mb-8 max-w-xl mx-auto">
+              Get started today with a free quote from FeelThePRINT. Discover how simple and professional your printing can be.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href={`/calculator?product=${product.id}`}
+                className="inline-flex items-center justify-center px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white text-xs md:text-sm uppercase tracking-widest font-bold rounded-lg shadow-xl hover:shadow-2xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 group"
+              >
+                <Calculator className="w-4 h-4 mr-2" />
+                Get an Instant Quote
+              </Link>
+              <a 
+                href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20printing%20a%20${encodeURIComponent(product.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs md:text-sm uppercase tracking-widest font-bold rounded-lg shadow-xl hover:shadow-2xl transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366]"
+              >
+                <MessageCircle className="w-4 h-4 mr-2 fill-current" />
+                Chat on WhatsApp
+              </a>
+            </div>
+            <div className="mt-12 pt-8 border-t border-amber-200/50">
+              <p className="text-[10px] font-mono font-bold text-amber-800/60 uppercase tracking-widest">
+                📍 Country of Origin: India — Since 1995
+              </p>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Right: Buy Box / Configuration */}
-        <div className="w-full lg:w-3/12 flex flex-col shrink-0">
-            <div className="border border-slate-200 rounded-xl p-5 shadow-sm bg-white sticky top-24">
-                <div className="text-lg font-bold text-slate-900 mb-1">Order Configuration</div>
-                <div className="text-xs text-slate-500 mb-5">Select volume & specs to lock in pricing</div>
-                
-                <form className="space-y-4">
-                    <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-1.5">Quantity</label>
-                        <select className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-all">
-                            <option>100 copies</option>
-                            <option>250 copies</option>
-                            <option>500 copies (Most Popular)</option>
-                            <option>1000 copies</option>
-                            <option>Custom Volume</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-1.5">Paper Stock</label>
-                        <select className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-all">
-                            <option>100gsm Premium Matte</option>
-                            <option>130gsm Glossy Art</option>
-                            <option>120gsm Textured Soft</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block text-xs font-bold text-slate-700 uppercase tracking-widest mb-1.5">Base Finishing</label>
-                        <select className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 transition-all">
-                            <option>Standard Trim</option>
-                            <option>Aqueous Coating</option>
-                            <option>Gloss Lamination</option>
-                        </select>
-                    </div>
-
-                    <div className="pt-5 space-y-3">
-                        <button type="button" className="w-full flex items-center justify-center py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900">
-                            Add to Requisition
-                        </button>
-                        <button type="button" className="w-full flex items-center justify-center py-3 px-4 bg-white border border-slate-300 hover:border-slate-800 hover:bg-slate-50 text-slate-900 text-sm font-bold rounded-lg shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900">
-                            Calculate Direct Price
-                        </button>
-                    </div>
-
-                    <div className="pt-4 text-[11px] text-slate-500 flex flex-col gap-2 border-t border-slate-100 mt-4">
-                        <div className="flex justify-between items-center">
-                            <span>Production Lead</span>
-                            <span className="font-medium text-slate-700">5-7 Business Days</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span>Processing</span>
-                            <span className="font-medium text-slate-700">Mani Offset 24/7 Facility</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span>Guarantee</span>
-                            <span className="font-medium text-blue-600 hover:underline cursor-pointer">Zero-Defect Tolerances</span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
       </main>
 
       <Footer />

@@ -52,6 +52,7 @@ export function About() {
               src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
               alt="Offset Printing Press Facility"
               fill
+              sizes="100vw"
               className="object-cover"
               referrerPolicy="no-referrer"
             />

@@ -1,6 +1,12 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Layers, Printer, Settings } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Printing Academy',
+  description: 'Demystifying the science, terminology, and mechanics behind high-volume industrial offset lithography.',
+};
 
 export default function PressOverviewPage() {
   return (

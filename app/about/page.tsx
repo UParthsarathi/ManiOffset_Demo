@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description: 'Learn about Mani Offset, the premier commercial offset printing enterprise in Sivakasi, South India.',
+};
 
 export default function AboutPage() {
   return (
@@ -26,8 +32,7 @@ export default function AboutPage() {
           <Image 
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" 
             alt="Mani Offset Facility" 
-            fill 
-            className="object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+            fill sizes="(max-width: 768px) 100vw, 100vw" className="object-cover grayscale hover:grayscale-0 transition-all duration-700" 
             referrerPolicy="no-referrer" 
           />
         </div>
@@ -48,13 +53,13 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10">
           <div className="flex flex-col gap-3 group">
             <div className="relative aspect-[4/3] rounded overflow-hidden shadow-sm border border-slate-200">
-              <Image src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Our Facilities" fill className="object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
+              <Image src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Our Facilities" fill sizes="(max-width: 768px) 100vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
             </div>
             <Link href="/about/facilities" className="text-[#005fb3] text-[15px] hover:underline font-semibold tracking-wide">Take a Tour of Our Facilities →</Link>
           </div>
           <div className="flex flex-col gap-3 group">
             <div className="relative aspect-[4/3] rounded overflow-hidden shadow-sm border border-slate-200">
-              <Image src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Quality Assurance" fill className="object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
+              <Image src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Quality Assurance" fill sizes="(max-width: 768px) 100vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-700" referrerPolicy="no-referrer" />
             </div>
             <Link href="/about/quality-assurance" className="text-[#005fb3] text-[15px] hover:underline font-semibold tracking-wide">Review Our ISO Quality Protocols →</Link>
           </div>

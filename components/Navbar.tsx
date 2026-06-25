@@ -5,7 +5,6 @@ import Image from "next/image";
 import { 
   Mail, 
   ChevronDown, 
-  Search, 
   Phone, 
   User, 
   ShoppingCart, 
@@ -16,10 +15,10 @@ import {
 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
+import { SearchWidget } from "./SearchWidget";
 
 export function Navbar() {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -87,12 +86,7 @@ export function Navbar() {
     }
   ];
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
+
 
     const handleScrollToConfigurator = () => {
       router.push("/calculator");
@@ -127,6 +121,7 @@ export function Navbar() {
                 src="/logo.png" 
                 alt="FeelThe Print Logo" 
                 fill
+                sizes="(max-width: 640px) 160px, 192px"
                 className="object-contain object-left" 
                 priority
               />
@@ -200,19 +195,8 @@ export function Navbar() {
             )}
           </div>
 
-          {/* SEARCH INPUT BAR */}
-          <form onSubmit={handleSearchSubmit} className="flex-1 flex items-center px-4 relative h-full">
-            <input 
-              type="text" 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for products" 
-              className="w-full text-sm text-white outline-none placeholder-slate-450 bg-transparent pr-8"
-            />
-            <button type="submit" className="absolute right-4 text-slate-400 hover:text-white cursor-pointer">
-              <Search className="w-4 h-4" />
-            </button>
-          </form>
+          {/* SEARCH WIDGET */}
+          <SearchWidget />
 
           {/* GET QUOTE NAV TRIGGER */}
           <button 
@@ -238,7 +222,7 @@ export function Navbar() {
 
           {/* User/Account Profile icon */}
           <button 
-            onClick={handleScrollToConfigurator}
+            onClick={() => router.push('/admin')}
             className="p-1 text-slate-300 hover:text-white transition-colors relative cursor-pointer"
             title="My Profile"
           >
@@ -290,14 +274,7 @@ export function Navbar() {
           </div>
 
           {/* Search bar for mobile */}
-          <form onSubmit={(e) => { e.preventDefault(); setShowMobileMenu(false); handleScrollToConfigurator(); }} className="flex items-center bg-[#0d1430] border border-white/10 rounded-lg p-2.5 shadow-sm">
-            <input 
-              type="text" 
-              placeholder="Search for products..." 
-              className="flex-1 text-xs outline-none text-slate-200 bg-transparent pr-2"
-            />
-            <Search className="w-4 h-4 text-slate-400" />
-          </form>
+          <SearchWidget isMobile onResultClick={() => setShowMobileMenu(false)} />
 
           {/* Hot call CTAs */}
           <div className="flex gap-2.5">

@@ -22,7 +22,7 @@ export default function FacilitiesPage() {
         </p>
         
         <div className="relative aspect-video rounded overflow-hidden shadow-sm border border-slate-200 mb-8">
-          <Image src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" alt="Mani Offset Production Floor" fill className="object-cover" referrerPolicy="no-referrer" />
+          <Image src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" alt="Mani Offset Production Floor" fill sizes="(max-width: 768px) 100vw, 100vw" className="object-cover" referrerPolicy="no-referrer" />
         </div>
 
         <h3 className="text-2xl font-bold text-[#20283c] mb-4 mt-8">Pre-Press Division</h3>
@@ -37,10 +37,10 @@ export default function FacilitiesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
             <div className="relative aspect-video rounded overflow-hidden shadow-sm border border-slate-200">
-                <Image src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Offset Press" fill className="object-cover" referrerPolicy="no-referrer" />
+                <Image src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800" alt="Offset Press" fill sizes="(max-width: 768px) 100vw, 100vw" className="object-cover" referrerPolicy="no-referrer" />
             </div>
             <div className="relative aspect-video rounded overflow-hidden shadow-sm border border-slate-200">
-                <Image src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800" alt="Bindery Segment" fill className="object-cover" referrerPolicy="no-referrer" />
+                <Image src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800" alt="Bindery Segment" fill sizes="(max-width: 768px) 100vw, 100vw" className="object-cover" referrerPolicy="no-referrer" />
             </div>
         </div>
 
