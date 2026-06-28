@@ -58,10 +58,10 @@ export function QuoteCalculator() {
 
         <form className="space-y-8">
           {/* Section 1: Volume */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
-              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-slate-900 text-white text-xs font-bold">1</span>
-              <h3 className="font-bold text-slate-900 uppercase tracking-widest text-xs">Volume & Scale</h3>
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 border-b border-gray-200 pb-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-900 text-xs font-bold">1</span>
+              <h3 className="font-bold text-gray-900 uppercase tracking-widest text-xs">Volume & Scale</h3>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -75,7 +75,7 @@ export function QuoteCalculator() {
                     type="number" 
                     value={copies}
                     onChange={(e) => setCopies(Math.max(0, Number(e.target.value)))}
-                    className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all font-mono text-lg mb-3"
+                    className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors font-mono text-base mb-3"
                   />
                   <input
                     type="range"
@@ -84,9 +84,9 @@ export function QuoteCalculator() {
                     step="100"
                     value={copies}
                     onChange={(e) => setCopies(Number(e.target.value))}
-                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                    className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-900"
                   />
-                  <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-mono">
+                  <div className="flex justify-between text-[10px] text-gray-400 mt-2 font-mono uppercase tracking-widest">
                     <span>500</span>
                     <span>50k+</span>
                   </div>
@@ -102,7 +102,7 @@ export function QuoteCalculator() {
                     type="number" 
                     value={pages}
                     onChange={(e) => setPages(Math.max(0, Number(e.target.value)))}
-                    className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all font-mono text-lg"
+                    className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors font-mono text-base"
                   />
                 </div>
               </div>
@@ -110,10 +110,10 @@ export function QuoteCalculator() {
           </div>
 
           {/* Section 2: Materials */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
-              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-slate-900 text-white text-xs font-bold">2</span>
-              <h3 className="font-bold text-slate-900 uppercase tracking-widest text-xs">Materials & Finish</h3>
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 border-b border-gray-200 pb-3">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-900 text-xs font-bold">2</span>
+              <h3 className="font-bold text-gray-900 uppercase tracking-widest text-xs">Materials & Finish</h3>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -122,7 +122,7 @@ export function QuoteCalculator() {
                 <select 
                   value={sizeFormat}
                   onChange={(e) => setSizeFormat(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all appearance-none"
+                  className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors appearance-none cursor-pointer"
                 >
                   <option>1/8 Demy</option>
                   <option>1/4 Demy</option>
@@ -137,7 +137,7 @@ export function QuoteCalculator() {
                 <select 
                   value={binding}
                   onChange={(e) => setBinding(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all appearance-none"
+                  className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors appearance-none cursor-pointer"
                 >
                   <option>Perfect Binding</option>
                   <option>Center Pinning</option>
@@ -152,7 +152,7 @@ export function QuoteCalculator() {
                 <select 
                   value={innerColor}
                   onChange={(e) => setInnerColor(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all appearance-none"
+                  className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors appearance-none cursor-pointer"
                 >
                   <option>4 Color (CMYK)</option>
                   <option>Single Color (Black)</option>
@@ -165,7 +165,7 @@ export function QuoteCalculator() {
                 <select 
                   value={innerPaper}
                   onChange={(e) => setInnerPaper(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all appearance-none"
+                  className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors appearance-none cursor-pointer"
                 >
                   <option>70 GSM NS Maplitho</option>
                   <option>80 GSM NS Maplitho</option>
@@ -180,7 +180,7 @@ export function QuoteCalculator() {
                 <select 
                   value={wrapper}
                   onChange={(e) => setWrapper(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-lg py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all appearance-none"
+                  className="w-full bg-white border border-gray-200 rounded py-3 px-4 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-colors appearance-none cursor-pointer"
                 >
                   <option>300 GSM Art Board with Thermal Lamination</option>
                   <option>250 GSM Art Board</option>
@@ -195,64 +195,64 @@ export function QuoteCalculator() {
 
       {/* Right Column: Sticky Estimate Box */}
       <div className="w-full lg:w-[400px] shrink-0">
-        <div className="sticky top-32 bg-slate-900 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="sticky top-32 bg-[#f8f9fa] border border-gray-200 rounded-xl overflow-hidden">
           <div className="p-6 md:p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <Calculator className="w-6 h-6 text-amber-500" />
-              <h3 className="text-lg font-bold text-white">Estimate Summary</h3>
+            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-200">
+              <Calculator className="w-5 h-5 text-gray-900" />
+              <h3 className="text-lg font-bold text-gray-900">Estimate Summary</h3>
             </div>
 
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Total Volume</span>
-                <span className="text-white font-mono">{copies.toLocaleString()} units</span>
+                <span className="text-gray-500">Total Volume</span>
+                <span className="text-gray-900 font-medium">{copies.toLocaleString()} units</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Pages</span>
-                <span className="text-white font-mono">{pages} per unit</span>
+                <span className="text-gray-500">Pages</span>
+                <span className="text-gray-900 font-medium">{pages} per unit</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Format</span>
-                <span className="text-white">{sizeFormat.split(' ')[0]}</span>
+                <span className="text-gray-500">Format</span>
+                <span className="text-gray-900 font-medium">{sizeFormat.split(' ')[0]}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Binding</span>
-                <span className="text-white">{binding}</span>
+                <span className="text-gray-500">Binding</span>
+                <span className="text-gray-900 font-medium">{binding}</span>
               </div>
             </div>
 
-            <div className="pt-6 border-t border-white/10 mb-8">
-              <div className="animate-fade-in">
-                <div className="flex items-end justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Est. Subtotal</span>
-                  <span className="text-4xl font-bold text-white font-mono tracking-tight">
+            <div className="pt-6 border-t border-gray-200 mb-8 bg-white -mx-6 md:-mx-8 px-6 md:px-8 py-6">
+              <div>
+                <div className="flex flex-col mb-1">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Estimated Total</span>
+                  <span className="text-4xl font-bold text-gray-900 tracking-tight">
                     ₹{estimatedPrice.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                   </span>
                 </div>
-                <div className="text-xs text-amber-500 text-right font-medium">excl. GST & Freight</div>
+                <div className="text-xs text-gray-500">excl. GST & Freight</div>
               </div>
             </div>
 
             <div className="space-y-3">
               <button 
                 type="button" 
-                className="w-full flex items-center justify-center py-4 px-6 bg-amber-500 hover:bg-amber-400 text-slate-900 text-sm uppercase tracking-widest font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+                className="w-full flex items-center justify-center py-4 px-6 bg-gray-900 hover:bg-gray-800 text-white text-sm font-bold rounded transition-colors shadow-sm"
               >
                 Request Official Quote
               </button>
             </div>
             
-            <div className="mt-6 flex items-start gap-3 p-4 bg-white/5 rounded-lg border border-white/5">
-              <Info className="w-5 h-5 text-slate-400 shrink-0 mt-0.5" />
-              <p className="text-[11px] leading-relaxed text-slate-400">
-                This is a preliminary estimate generated by our system. Final pricing may vary based on exact artwork requirements, shipping destination, and raw material fluctuations.
+            <div className="mt-6 flex items-start gap-3 p-4 bg-white rounded border border-gray-200 shadow-sm">
+              <Info className="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
+              <p className="text-xs leading-relaxed text-gray-500">
+                This is a preliminary estimate. Final pricing may vary based on exact artwork requirements, shipping destination, and material fluctuations.
               </p>
             </div>
           </div>
           
-          <div className="bg-white/5 px-6 py-4 border-t border-white/5 flex items-center justify-center gap-2 text-xs text-slate-300">
-            <Package className="w-4 h-4 text-amber-500" />
-            Standard production time: <strong className="text-white">5-7 Days</strong>
+          <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-center gap-2 text-xs text-gray-600">
+            <Package className="w-4 h-4 text-gray-400" />
+            Standard production time: <strong className="text-gray-900">5-7 Days</strong>
           </div>
         </div>
       </div>
