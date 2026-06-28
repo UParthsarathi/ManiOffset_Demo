@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { products } from "@/lib/data";
-import { Star, MessageCircle, Calculator, FileText, Check, ChevronDown, UploadCloud } from "lucide-react";
+import { MessageCircle, Check } from "lucide-react";
 import StructuredData from "@/components/StructuredData";
 import { generateProductSchema } from "@/lib/seo";
 import { Metadata } from "next";
@@ -66,29 +66,18 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
           {/* Right: Details & Action */}
           <div className="w-full lg:w-[45%] xl:w-[40%] flex flex-col pt-2 lg:pt-0">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">{product.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">{product.title}</h1>
             
-            <div className="flex items-center gap-2 mb-6">
-              <div className="flex text-amber-500">
-                <Star className="w-4 h-4 fill-current" />
-                <Star className="w-4 h-4 fill-current" />
-                <Star className="w-4 h-4 fill-current" />
-                <Star className="w-4 h-4 fill-current" />
-                <Star className="w-4 h-4 fill-current" />
-              </div>
-              <span className="text-sm text-gray-600 underline cursor-pointer hover:text-gray-900">5 (4)</span>
-            </div>
-
             <ul className="list-disc pl-5 space-y-2 mb-6 text-sm text-gray-700 leading-relaxed">
-              <li>Customised multicolor print on premium quality paper stocks</li>
-              <li>Available in multiple standard sizes and custom dimensions</li>
-              <li>State-of-the-art offset printing for unmatched consistency and durability</li>
-              <li>Upload your photos/Logo or consult our prepress team directly</li>
-              <li>For design guidelines, please refer steps mentioned below in the Design Tips section</li>
+              <li><strong>From 200 to 1 Crore Copies</strong> — High-quality printing in every size.</li>
+              <li><strong>200 Copies Minimum</strong> — Bulk offset printing that saves you money.</li>
+              <li><strong>3–10 Day Delivery</strong> — Urgent orders? We’ll make it happen.</li>
+              <li><strong>Printing Sizes & Models</strong> — Full options listed below.</li>
+              <li><strong>Learn Our Printing Process</strong> — <Link href="/press" className="underline hover:text-gray-900">Visit the Press section</Link>.</li>
             </ul>
 
             {/* WhatsApp CTA */}
-            <div className="mb-6">
+            <div className="mb-10">
               <a 
                 href={`https://wa.me/919999999999?text=${whatsappMessage}`}
                 target="_blank"
@@ -105,27 +94,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               </a>
             </div>
 
-            {/* Price Tags & Details */}
-            <div className="mb-6 text-sm text-gray-800 space-y-1.5">
-              <div className="flex items-center gap-2">
-                <span className="w-1 h-1 bg-gray-600 rounded-full"></span> 
-                <em className="italic">Cash on Delivery available</em>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1 h-1 bg-gray-600 rounded-full"></span> 
-                <strong>Price below is MRP (inclusive of all taxes)</strong>
-              </div>
-            </div>
-
-            <div className="mb-8 flex flex-col gap-3">
-              <a href="#details" className="text-sm underline text-gray-700 hover:text-gray-900 font-medium inline-block w-fit">See Details</a>
-              <div className="flex items-center gap-2 text-sm text-gray-700">
-                <FileText className="w-4 h-4 text-gray-400"/>
-                <span><span className="underline cursor-pointer hover:text-gray-900 font-medium">View Specs & Templates</span> to create your print-ready file.</span>
-              </div>
-            </div>
-
-            {/* Calculator CTA */}
             <div className="border-t border-gray-200 pt-6 space-y-5">
               <Link 
                 href={`/calculator?product=${product.id}`} 
@@ -135,7 +103,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   <span className="font-bold">Custom Order Estimate</span>
                   <span className="text-xs font-medium text-slate-800">Need specific requirements? Use our calculator</span>
                 </div>
-                <UploadCloud className="w-6 h-6 text-slate-800 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
               
               <div className="text-center mt-4 text-xs text-gray-500 flex items-center justify-center gap-1.5">
