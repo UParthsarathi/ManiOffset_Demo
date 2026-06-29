@@ -16,6 +16,7 @@ import {
 
 import { useRouter } from "next/navigation";
 import { SearchWidget } from "./SearchWidget";
+import { products } from "@/lib/data";
 
 export function Navbar() {
   const router = useRouter();
@@ -159,36 +160,43 @@ export function Navbar() {
                 {/* Main Categories Panel */}
                 <div className="w-[260px] bg-[#111111] text-slate-300 font-sans text-[13px] border border-white/5 py-1">
                   {categoriesData.map((cat, idx) => (
-                    <div
+                    <Link
+                      href={`/products?category=${encodeURIComponent(cat.name)}`}
                       key={idx}
                       onMouseEnter={() => setActiveCategory(idx)}
-                      onClick={() => handleScrollToConfigurator()}
+                      onClick={() => {
+                        setShowCategories(false);
+                        setActiveCategory(null);
+                      }}
                       className={`w-full px-5 py-3 cursor-pointer flex items-center justify-between transition-colors border-b border-white/5 last:border-0 ${
                         activeCategory === idx ? 'bg-[#1a1a1a] text-white font-semibold' : 'hover:bg-[#1a1a1a] hover:text-white font-medium'
                       }`}
                     >
                       <span>{cat.name}</span>
                       <ChevronDown className="w-3.5 h-3.5 -rotate-90 opacity-50" />
-                    </div>
+                    </Link>
                   ))}
                 </div>
 
                 {/* Subcategories Flyout Panel */}
                 {activeCategory !== null && (
                   <div className="flex-1 bg-[#1a1a1a] text-slate-300 font-sans text-[13px] border border-l-0 border-white/5 py-1 min-w-[290px]">
-                    {categoriesData[activeCategory].subcategories.map((sub, sIdx) => (
-                      <div
-                        key={sIdx}
-                        onClick={() => {
-                          setShowCategories(false);
-                          setActiveCategory(null);
-                          handleScrollToConfigurator();
-                        }}
-                        className="w-full px-5 py-3 cursor-pointer transition-colors hover:bg-white/5 hover:text-amber-500 hover:pl-6 duration-200"
-                      >
-                        {sub}
-                      </div>
-                    ))}
+                    {categoriesData[activeCategory].subcategories.map((sub, sIdx) => {
+                      const matchedProduct = products.find(p => p.title === sub);
+                      return (
+                        <Link
+                          key={sIdx}
+                          href={matchedProduct ? `/product/${matchedProduct.id}` : "#"}
+                          onClick={() => {
+                            setShowCategories(false);
+                            setActiveCategory(null);
+                          }}
+                          className="block w-full px-5 py-3 cursor-pointer transition-colors hover:bg-white/5 hover:text-amber-500 hover:pl-6 duration-200"
+                        >
+                          {sub}
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -263,7 +271,7 @@ export function Navbar() {
                   key={idx}
                   onClick={() => {
                     setShowMobileMenu(false);
-                    handleScrollToConfigurator();
+                    router.push(`/products?category=${encodeURIComponent(cat.name)}`);
                   }}
                   className="px-3 py-2 bg-white/5 rounded-lg border border-white/10 text-left text-xs text-slate-200 font-semibold hover:bg-white/10 transition-colors"
                 >
