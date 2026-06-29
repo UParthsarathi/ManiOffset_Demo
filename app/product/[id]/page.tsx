@@ -42,7 +42,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <Navbar />
 
       {/* Breadcrumb */}
-      <div className="pt-24 pb-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <div className="pt-8 pb-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="flex flex-wrap items-center text-sm text-gray-500">
           <Link href="/" className="hover:text-gray-900">Home</Link>
           <span className="mx-2">›</span>
